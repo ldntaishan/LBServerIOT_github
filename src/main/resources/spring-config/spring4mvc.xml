@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+						   http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+						   http://www.springframework.org/schema/context
+						   http://www.springframework.org/schema/context/spring-context-4.3.xsd
+						   http://www.springframework.org/schema/tx
+						   http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+						   http://www.springframework.org/schema/mvc
+						   http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+	<context:annotation-config />
+	<context:component-scan base-package="com.cn.httpsms">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+
+	<mvc:interceptors>
+		<bean name="openSessionInViewInterceptor"
+			  class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor">
+			<property name="entityManagerFactory">
+				<ref bean="entityManagerFactory"/>
+			</property>
+		</bean>
+	</mvc:interceptors>
+
+	<!--JPA注解Bean后置处理器-->
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+	<!--JPA数据库实体管理器-->
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitName" value="allunion_persistenceunit"/>
+		<property name="packagesToScan" value="com.cn.httpsms.entity"/>
+		<property name="dataSource" ref="dataSource"/>
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="showSql" value="${jpa.showSql}"/>
+				<!--<property name="generateDdl" value="${jpa.generateDdl}"/>-->
+				<property name="databasePlatform" value="${jpa.databasePlatform}"/>
+			</bean>
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.dialect">${jpa.databasePlatform}</prop>
+				<prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>
+				<prop key="hibernate.format_sql">${jpa.formatSql}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${jpa.generateDdl}</prop>
+
+				<!--
+                <prop key="hibernate.connection.autocommit">false</prop>
+                <prop key="hibernate.cache.use_second_level_cache">false</prop>
+                <prop key="hibernate.cache.use_query_cache">false</prop>
+                <prop key="hibernate.cache.provider_class"></prop>
+                <prop key="hibernate.cache.region.factory_class"></prop>
+                <prop key="hibernate.generate_statistics"></prop> -->
+			</props>
+		</property>
+	</bean>
+	<!-- 声明一个Spring提供的JPA事务管理器，传入的参数是Spring中的实体管理器工厂 -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	<!-- 开启Spring提供的基于注解的声明式事务管理 -->
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+	<!-- data source with c3p0 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		  destroy-method="close">
+		<property name="driverClass" value="${dataSource.driverClass}"/>
+		<property name="jdbcUrl" value="${dataSource.jdbcUrl}"/>
+		<property name="user" value="${dataSource.user}"/>
+		<property name="password" value="${dataSource.password}"/>
+		<property name="acquireIncrement" value="${dataSource.acquireIncrement}"/>
+		<property name="minPoolSize" value="${dataSource.minPoolSize}"/>
+		<property name="initialPoolSize" value="${dataSource.initialPoolSize}"/>
+		<property name="maxPoolSize" value="${dataSource.maxPoolSize}"/>
+		<property name="maxIdleTime" value="${dataSource.maxIdleTime}"/>
+		<property name="unreturnedConnectionTimeout" value="${dataSource.unreturnedConnectionTimeout}"/>
+	</bean>
+</beans>

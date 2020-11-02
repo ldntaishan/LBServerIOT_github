@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       					   http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+       					   http://www.springframework.org/schema/context
+						   http://www.springframework.org/schema/context/spring-context-4.2.xsd
+    	                   http://www.springframework.org/schema/tx
+    	                   http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+    	                   http://www.springframework.org/schema/aop
+    	                   http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+                           http://www.springframework.org/schema/task
+						   http://www.springframework.org/schema/task/spring-task-4.2.xsd">
+    <!--加载系统属性配置-->
+    <!--<bean class="com.cn.httpsms.common.PropertyPlaceholderConfiger">-->
+        <!--<property name="locations">-->
+            <!--<list>-->
+                <!--<value>classpath:applicationContext.properties</value>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!-- 定义全局配置文件 -->
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:applicationContext.properties</value>
+            </list>
+        </property>
+
+    </bean>
+    <import resource="classpath:spring-config/spring4mvc.xml" />
+
+   
+
+    <!--消息重推任务列表，
+		fixed-delay：任务完成到下次任务开始的间隔，
+		fixed-rate：任务开始到下次任务开始的间隔，如果时间到了没运行完，则运行完后立即执行
+		initial-delay：任务第一次运行延迟时间
+	-->
+    <!-- <task:scheduled-tasks>
+        <task:scheduled ref="a" method="a" initial-delay="20000" fixed-delay="5000" />
+        <task:scheduled ref="WeatherSendPubService" method="weatherYWloop" initial-delay="40000" fixed-delay="6000" />
+
+    </task:scheduled-tasks> -->
+    <!--防止日志断线的调试轮询-->
+    <bean id="TurnTest" class="com.cn.httpsms.common.TurnTest"/>
+    <task:scheduled-tasks>
+        <!--<task:scheduled ref="a" method="a" initial-delay="20000" fixed-delay="5000" />-->
+        <task:scheduled ref="TurnTest" method="loop" initial-delay="40000" fixed-delay="6000" />
+
+    </task:scheduled-tasks>
+
+</beans>
+
