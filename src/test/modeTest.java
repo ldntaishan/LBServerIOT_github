@@ -27,7 +27,8 @@ public class modeTest {
 
     @Test
     public void test_useropen_login() throws UnsupportedEncodingException {
-        userMode.useropen_login("13426364664","111");
+//        userMode.useropen_login("13426364664","111");
+        System.out.println(userMode.useropen_login("13426364664","111"));
 //        System.out.println(adminController.api_userlogin("13426364664","123456").toJSONString());
     }
 }
