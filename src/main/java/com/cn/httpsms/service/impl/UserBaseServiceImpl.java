@@ -1,6 +1,7 @@
 package com.cn.httpsms.service.impl;
 
 
+import com.cn.httpsms.entity.Product;
 import com.cn.httpsms.entity.UserBase;
 import com.cn.httpsms.service.UserBaseService;
 import org.json.JSONObject;
@@ -58,6 +59,25 @@ public class UserBaseServiceImpl extends BaseServiceImpl<UserBase> implements Us
         String sql = "select ub from UserBase ub where ub.userTel='"+loginTag+"' and ub.userPassWord='"+userPassWord+"'";
         List<UserBase> list = getResultList(sql);
         return list;
+    }
+
+    /**
+     * 根据创建时间查询全部
+     * //无条件查询前100条数据
+     * @return
+     */
+    @Override
+    public List<UserBase> list_all_userBase()
+    {
+        String list_all_userBase_Sql = "select pd from UserBase pd order by pd.createdate DESC";
+        List<UserBase> list_userBase = getResultList(list_all_userBase_Sql);
+        return list_userBase;
+    }
+
+    @Override
+    public void deleteUserBase(String userBaseId)
+    {
+        deleteById(userBaseId);
     }
 
 

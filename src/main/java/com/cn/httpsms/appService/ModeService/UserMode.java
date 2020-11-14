@@ -3,13 +3,17 @@ package com.cn.httpsms.appService.ModeService;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cn.httpsms.common.SysCode;
+import com.cn.httpsms.entity.ProductOpen;
+import com.cn.httpsms.entity.UserBase;
 import com.cn.httpsms.entity.UserOpen;
+import com.cn.httpsms.service.UserBaseService;
 import com.cn.httpsms.service.UserOpenService;
 import com.cn.httpsms.util.StringEQ;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -23,6 +27,9 @@ public class UserMode {
 
     @Autowired
     private UserOpenService userOpenService;
+
+    @Autowired
+    private UserBaseService userBaseService;
 
     // 用户注册
     public void useropen_reg(String userOpenTel,String userOpenPassWord)
@@ -96,10 +103,11 @@ public class UserMode {
         }
         return return_json;
     }
-
     //todo 用户信息修改
 
     //todo 用户合法性验证
+
+
 
 
 }

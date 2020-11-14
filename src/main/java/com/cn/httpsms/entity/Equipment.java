@@ -12,13 +12,12 @@ import java.util.Date;
  * lzw
  * 设备表
  * --------------------------------------
- * 主键
- * 设备名称（风塔名称）
- * 设备类型
- * 设备编号
- * 从属产品ID
- * 从属产品名称（冗余字段）
- * 管理状态（1可运行 2不可运行 ）
+ * 本表主键ID
+ * 所属场站
+ * 设备名称
+ * 设备型号
+ * 设备编号（系统自用）
+ * 系统状态
  * 创建时间
  * 更新时间
  * --------------------------------------
@@ -37,35 +36,30 @@ public class Equipment implements Serializable {
     }
 
     /**
-     * 主键
+     * 本表主键ID
      */
     private String equipmentId;
+    /**
+     * 机构名称（所属风场）
+     */
+    private String organization;
     /**
      * 设备名称
      */
     private String equipmentName;
     /**
-     * 设备类型
+     * 设备型号
      */
     private String equipmentType;
     /**
      * 设备编号
      */
     private String equipmentNO;
+    /**
+     * 系统状态
+     */
+    private String sysState;
 
-    /**
-     * 从属产品ID
-     */
-    private String productId;
-    /**
-     * 从属产品名称（冗余字段）
-     */
-    private String productName;
-
-    /**
-     * 管理状态（1可运行 2不可运行）
-     */
-    private String equipmentState;
     /**
      * 创建时间
      */
@@ -112,33 +106,24 @@ public class Equipment implements Serializable {
     public void setEquipmentNO(String equipmentNO) {
         this.equipmentNO = equipmentNO;
     }
-    @Column(name = "productId")
-    public String getProductId() {
-        return productId;
+
+    @Column(name = "organization")
+    public String getOrganization() {
+        return organization;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-    @Column(name = "productName")
-    public String getProductName() {
-        return productName;
+    public void setOrganization(String organization) {
+        this.organization = organization;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    @Column(name = "sysState")
+    public String getSysState() {
+        return sysState;
     }
 
-    @Column(name = "equipmentState")
-    public String getEquipmentState() {
-        return equipmentState;
+    public void setSysState(String sysState) {
+        this.sysState = sysState;
     }
-
-    public void setEquipmentState(String equipmentState) {
-        this.equipmentState = equipmentState;
-    }
-
-
 
     @Column(name = "CREATE_DATE")
     @Type(type = "java.util.Date")

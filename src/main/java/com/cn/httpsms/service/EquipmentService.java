@@ -2,6 +2,8 @@ package com.cn.httpsms.service;
 
 import com.cn.httpsms.entity.Equipment;
 
+import java.util.List;
+
 /**
  * Created by ldn on 2017/10/24.
  */
@@ -13,5 +15,7 @@ public interface EquipmentService extends BaseService<Equipment>{
      * @return
      */
     public Equipment findById_equipment(String equipmentId);
+    public void del_eqmt(String equipmentId);
+    public List<Equipment> list_all_equipment();
 
 }

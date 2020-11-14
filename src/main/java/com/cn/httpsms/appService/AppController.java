@@ -3,16 +3,22 @@ package com.cn.httpsms.appService;
 
 //import com.cn.httpsms.EquipmentService.EquipmentMessageSend;
 //import com.cn.httpsms.MemorandumService.MemorandumSendPubService;
+import com.alibaba.fastjson.JSONArray;
+import com.cn.httpsms.appService.ModeService.UserMode;
+import com.cn.httpsms.common.SysCode;
 import com.cn.httpsms.entity.*;
 import com.cn.httpsms.service.*;
+import com.cn.httpsms.util.StringEQ;
 import org.apache.log4j.Logger;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +38,7 @@ public class AppController {
 
     @Autowired
     private UserBaseService userBaseService;
+
 //    @Autowired
 //    private UserAndEquipmentService userAndEquipmentService;
 //    @Autowired
@@ -58,8 +65,10 @@ public class AppController {
 
 
 
-    @RequestMapping("/t1")
+
+    @RequestMapping(value = "/t1",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
+    @CrossOrigin
     public String t1(String msg) throws UnsupportedEncodingException {
         logger.info("================="+msg);
         logger.info("================="+new String(msg.getBytes("iso-8859-1"),"utf-8"));
@@ -271,6 +280,93 @@ public class AppController {
         }
         return fanhuiJSONobj.toString();
     }
+
+    /**
+     * 查询用户列表
+     * return：list列表
+     * http://192.168.1.4:8080/product/listProduct
+     */
+    @RequestMapping(value = "/seAllUserList",method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    @CrossOrigin
+    public String seAllUserList() {
+
+//        JSONObject json = JSONObject.parseObject(httpTool(request));
+//        logger.info("================="+json.toString());
+
+        logger.info("=========获取用户列表========");
+        com.alibaba.fastjson.JSONObject fanhuiJSONobj = new com.alibaba.fastjson.JSONObject();
+        fanhuiJSONobj.put("callbackCode","991");
+        fanhuiJSONobj.put("callbackDetails","系统错误");
+
+        //查询用户列表
+        List<UserBase> list_userBase=userBaseService.list_all_userBase();
+
+
+        if(list_userBase.size()!=0)
+        {
+            com.alibaba.fastjson.JSONArray jsonarray_userBase=new JSONArray();
+            for(int i=0;i<list_userBase.size();i++)
+            {
+//                JSONObject jsonObject_product=new JSONObject();
+//                jsonObject_product.put("",list_product.get(i));
+//                jsonObject_product.put("","");
+//                jsonObject_product.put("","");
+//                jsonObject_product.put("","");
+                jsonarray_userBase.add(list_userBase.get(i));
+            }
+            fanhuiJSONobj.put("callbackCode","200");
+            fanhuiJSONobj.put("callbackDetails","正常");
+            fanhuiJSONobj.put("callbackList",jsonarray_userBase);
+
+        }else
+        {
+            fanhuiJSONobj.put("callbackCode","201");
+            fanhuiJSONobj.put("callbackDetails","数据不存在");
+            fanhuiJSONobj.put("callbackList","");
+
+        }
+        return fanhuiJSONobj.toString();
+    }
+
+    /**
+     * 根据id删除用户
+     * @param userBaseId
+     * @return
+     * {"callbackCode":"200","callbackDetails":"成功"}
+     */
+    @RequestMapping(value = "/deluser",method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    @CrossOrigin
+    public String del_userBase(String userBaseId) {
+
+        com.alibaba.fastjson.JSONObject return_json = new com.alibaba.fastjson.JSONObject();
+        return_json.put("callbackCode", SysCode.SYS_ERROR_CODE);
+        return_json.put("callbackDetails",SysCode.SYS_ERROR_DESCRIPTION);
+
+        if(StringEQ.checkStringIsNull(userBaseId))
+        {
+            String userSql = "select ub from UserBase ub where ub.userId='" + userBaseId + "'";
+            List<UserBase> list = userBaseService.getResultList(userSql);
+            if (list.size() == 0) {
+                return_json.put("callbackCode",SysCode.SYS_NULLID_CODE);
+                return_json.put("callbackDetails",SysCode.SYS_NULLID_DESCRIPTION);
+            } else {
+                userBaseService.deleteUserBase(userBaseId);
+                return_json.put("callbackCode",SysCode.SUCCESS_CODE);
+                return_json.put("callbackDetails",SysCode.SUCCESS_DESCRIPTION);
+            }
+
+        }else
+        {
+            return_json.put("callbackCode",SysCode.user_id_tag_null_code);
+            return_json.put("callbackDetails",SysCode.user_id_tag_null_description);
+        }
+
+
+        return return_json.toString();
+    }
+    //todo 根据id 修改用户
 //
 //    /**
 //     * 手机号注册时获取验证码接口

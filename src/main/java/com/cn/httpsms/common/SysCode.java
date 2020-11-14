@@ -11,6 +11,15 @@ public class SysCode {
     public static String  SYS_ERROR_CODE="999";//系统综合错误标识
     public static String  SYS_ERROR_DESCRIPTION="系统错误";
 
+    public static String  SYS_PARAMTER_CODE="101";
+    public static String  SYS_PARAMTER_DESCRIPTION="空参数";
+
+    public static String  SYS_NULLID_CODE="102";
+    public static String  SYS_NULLID_DESCRIPTION="id不存在";
+
+    public static String  SYS_NULLLIST_CODE="103";
+    public static String  SYS_NULLLIST_DESCRIPTION="空列表";
+
     //用户系统码
     public static String  user_not_exist_code="10001";//用户不存在
     public static String  user_not_exist_description="用户不存在";
@@ -29,6 +38,11 @@ public class SysCode {
      */
     public static String  user_login_tag_null_code="10004";
     public static String  user_login_tag_null_description="用户登陆标识为空";
+
+    public static String  user_id_tag_null_code="10005";
+    public static String  user_id_tag_null_description="用户id为空";
+
+
 
     /**
      * 参数为空或""

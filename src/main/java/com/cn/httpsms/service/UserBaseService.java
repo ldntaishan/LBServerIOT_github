@@ -12,7 +12,9 @@ public interface UserBaseService extends BaseService<UserBase>{
 
     public void insertUserBase(UserBase ub);
     public void updateUserBase(UserBase ub);
+    public void deleteUserBase(String userBaseId);
     public JSONObject se_UserBase(String key, String value);
     public List<UserBase> userlogin(String loginTag, String userPassWord);
+    public List<UserBase> list_all_userBase();
 
 }

@@ -20,7 +20,7 @@
     <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
         <property name="order" value="1"/>
     </bean>
-    <mvc:resources mapping="/resource/**" location="/resource/"/>
+    <mvc:resources mapping="/resource/**" location="WEB-INF"/>
     <mvc:annotation-driven>
         <mvc:message-converters>
             <bean id="stringHttpMessageConverter"
