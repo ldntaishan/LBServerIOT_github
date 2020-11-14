@@ -1,6 +1,7 @@
 import com.cn.httpsms.appService.AppController;
 import com.cn.httpsms.appService.EquipmentController;
 import com.cn.httpsms.appService.ModeService.UserMode;
+import com.cn.httpsms.appService.SensorController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class modeTest {
 
     @Autowired
     private EquipmentController equipmentController;
+
+    @Autowired
+    private SensorController sensorController;
 
     @Test
     public void test_useropen_reg() throws UnsupportedEncodingException {
@@ -101,4 +105,37 @@ public class modeTest {
     public void test_find_eqmt_list() throws UnsupportedEncodingException {
         System.out.println(equipmentController.find_eqmt_list());
     }
+
+    //=========================以下传感器测试方法============================================================
+
+    /**
+     * 新建传感器 测试方法
+     * @throws UnsupportedEncodingException
+     */
+    @Test
+    public void test_creart_sensor() throws UnsupportedEncodingException {
+        System.out.println(sensorController.creart_sensor
+                ("六号点位",
+                        "M001",
+                        "5161326716",
+                        "4028098175c6d2cc0175c6d2d7a10000",
+                        "0.1",
+                        "4028098175c6d2cc0175c6d2d7a10001"));
+    }
+
+    @Test
+    public void test_del_sensor() throws UnsupportedEncodingException {
+        System.out.println(sensorController.del_sensor("4028098175c7f9110175c7f91d470000"));
+    }
+
+    @Test
+    public void test_find_sensor_obj() throws UnsupportedEncodingException {
+        System.out.println(sensorController.find_ss_obj("4028098175c7f89a0175c7f8a5e40000"));
+    }
+
+    @Test
+    public void test_find_sensor_list() throws UnsupportedEncodingException {
+        System.out.println(sensorController.find_ss_list());
+    }
+
 }

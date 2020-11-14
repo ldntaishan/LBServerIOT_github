@@ -226,7 +226,7 @@ public class EquipmentController {
         return_json.put("callbackCode", SysCode.SYS_ERROR_CODE);
         return_json.put("callbackDetails",SysCode.SYS_ERROR_DESCRIPTION);
 
-        //查询用户列表
+        //查询设备列表
         List<Equipment> list_all_equipment=equipmentService.list_all_equipment();
 
         if(list_all_equipment.size()!=0)
