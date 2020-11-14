@@ -13,15 +13,12 @@ import java.util.Date;
  * 设备表
  * --------------------------------------
  * 主键
- * 设备名称
+ * 设备名称（风塔名称）
  * 设备类型
- * 设备出厂唯一码
- * 设备密钥（阿里云设备deviceSecret）
- * 阿里云设备名（deviceName）
+ * 设备编号
  * 从属产品ID
  * 从属产品名称（冗余字段）
- * 阿里云从属产品key（productKey）
- * 管理状态（1可运行 2不可运行 3异常运行）
+ * 管理状态（1可运行 2不可运行 ）
  * 创建时间
  * 更新时间
  * --------------------------------------
@@ -52,17 +49,10 @@ public class Equipment implements Serializable {
      */
     private String equipmentType;
     /**
-     * 设备出厂唯一码(序列码)
+     * 设备编号
      */
-    private String equipmentSN;
-    /**
-     * 设备密钥（阿里云设备deviceSecret）
-     */
-    private String deviceSecret;
-    /**
-     * 阿里云设备名（deviceName）
-     */
-    private String deviceName;
+    private String equipmentNO;
+
     /**
      * 从属产品ID
      */
@@ -71,12 +61,9 @@ public class Equipment implements Serializable {
      * 从属产品名称（冗余字段）
      */
     private String productName;
+
     /**
-     * 阿里云从属产品key（productKey） 冗余字段
-     */
-    private String productKey;
-    /**
-     * 管理状态（1可运行 2不可运行 3异常运行）
+     * 管理状态（1可运行 2不可运行）
      */
     private String equipmentState;
     /**
@@ -116,29 +103,14 @@ public class Equipment implements Serializable {
     public void setEquipmentType(String equipmentType) {
         this.equipmentType = equipmentType;
     }
-    @Column(name = "equipmentSN")
-    public String getEquipmentSN() {
-        return equipmentSN;
+
+    @Column(name = "equipmentNO")
+    public String getEquipmentNO() {
+        return equipmentNO;
     }
 
-    public void setEquipmentSN(String equipmentSN) {
-        this.equipmentSN = equipmentSN;
-    }
-    @Column(name = "deviceSecret")
-    public String getDeviceSecret() {
-        return deviceSecret;
-    }
-
-    public void setDeviceSecret(String deviceSecret) {
-        this.deviceSecret = deviceSecret;
-    }
-    @Column(name = "deviceName")
-    public String getDeviceName() {
-        return deviceName;
-    }
-
-    public void setDeviceName(String deviceName) {
-        this.deviceName = deviceName;
+    public void setEquipmentNO(String equipmentNO) {
+        this.equipmentNO = equipmentNO;
     }
     @Column(name = "productId")
     public String getProductId() {
@@ -156,14 +128,7 @@ public class Equipment implements Serializable {
     public void setProductName(String productName) {
         this.productName = productName;
     }
-    @Column(name = "productKey")
-    public String getProductKey() {
-        return productKey;
-    }
 
-    public void setProductKey(String productKey) {
-        this.productKey = productKey;
-    }
     @Column(name = "equipmentState")
     public String getEquipmentState() {
         return equipmentState;
