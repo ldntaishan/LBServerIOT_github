@@ -66,6 +66,7 @@ public class EquipmentController {
             equipmentService.insert(eqmt);
             return_json.put("callbackCode",SysCode.SUCCESS_CODE);
             return_json.put("callbackDetails",SysCode.SUCCESS_DESCRIPTION);
+            return_json.put("equipmentId",eqmt.getEquipmentId());
         }else{
             return_json.put("callbackCode",SysCode.SYS_PARAMTER_CODE);
             return_json.put("callbackDetails",SysCode.SYS_PARAMTER_DESCRIPTION);

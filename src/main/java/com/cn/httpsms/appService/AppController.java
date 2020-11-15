@@ -19,9 +19,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
+
+import static com.cn.httpsms.util.HttpServletRequestToString.httpTool;
 
 /**
  * Created by ldn on 2017/10/24.
@@ -75,14 +78,24 @@ public class AppController {
         return "apptest"+msg;
         }
 
+    @RequestMapping(value = "/t2",method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    @CrossOrigin
+    public String t2(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+        com.alibaba.fastjson.JSONObject json = com.alibaba.fastjson.JSONObject.parseObject(httpTool(request));
+        logger.info("================="+json.toJSONString());
+//        logger.info("================="+new String(msg.getBytes("iso-8859-1"),"utf-8"));
+        return "apptest"+json.toJSONString();
+    }
+
     /**
      * 用户注册接口
      *
      * @return
      */
-    @RequestMapping("/UserSignin")
+    @RequestMapping("/userSignin")
     @ResponseBody
-    public String UserSignin(String userTel,String userPassWord,String securityCode,String userRole,String RequestId)
+    public String userSignin(String userTel,String userPassWord,String securityCode,String userRole)
     {
         //调用记录访问行为 模块 后续完善 RequestId
 
@@ -96,7 +109,7 @@ public class AppController {
         fanhuiJSONobj.put("RequestCode", 999);
         fanhuiJSONobj.put("RequestMessage", "注册失败，系统出错啦");
         if(!userTel.isEmpty()&&!userPassWord.isEmpty()&&!userRole.isEmpty()) {
-            JSONObject eqUserExistJSONobj = new JSONObject(eqUserExist(userTel, "localRequst"));
+            JSONObject eqUserExistJSONobj = new JSONObject(eqUserExist(userTel));
             if (eqUserExistJSONobj.getInt("RequestCode") == 0) {
 
                 if (securityCode.equals("123456")) {
@@ -111,74 +124,24 @@ public class AppController {
 //                    ub.setUserLoginState("0");
                     ub.setChangedate(new Date());
                     userBaseService.insert(ub);
-                    fanhuiJSONobj.put("RequestCode", 0);
-                    fanhuiJSONobj.put("RequestMessage", "注册成功");
+                    fanhuiJSONobj.put("RequestCode", 200);
+                    fanhuiJSONobj.put("RequestMessage", "成功");
                 } else {
-                    fanhuiJSONobj.put("RequestCode", 3);
+                    fanhuiJSONobj.put("RequestCode", 1003);
                     fanhuiJSONobj.put("RequestMessage", "无效验证码");
                 }
             } else {
-                fanhuiJSONobj.put("RequestCode", 1);
+                fanhuiJSONobj.put("RequestCode", 1001);
                 fanhuiJSONobj.put("RequestMessage", "此用户已经注册");
             }
         }else{
-            fanhuiJSONobj.put("RequestCode", 2);
+            fanhuiJSONobj.put("RequestCode", 1002);
             fanhuiJSONobj.put("RequestMessage", "空参数");
         }
         return fanhuiJSONobj.toString();
     }
 
-/**
- //     * 用户注册接口
- //     *
- //     * @return
- //     */
-//    @RequestMapping("/UserSignin")
-//    @ResponseBody
-//    public String UserSignin(String userTel,String userPassWord,String securityCode,String RequestId)
-//    {
-//        //调用记录访问行为 模块 后续完善 RequestId
-//
-//        //数据校验
-//        //判断是否为空
-//        //判断是否为电话号码
-//        //判断userPassWord的 min max长度合规
-//        //数据校验的工作以由阿里云API网关完成，下面直接完成业务
-//
-//        JSONObject fanhuiJSONobj = new JSONObject();
-//        fanhuiJSONobj.put("RequestCode", 999);
-//        fanhuiJSONobj.put("RequestMessage", "注册失败，系统出错啦");
-//        if(!userTel.isEmpty()&&!userPassWord.isEmpty()) {
-//            JSONObject eqUserExistJSONobj = new JSONObject(eqUserExist(userTel, "localRequst"));
-//            if (eqUserExistJSONobj.getInt("RequestCode") == 0) {
-//
-//                if (securityCode.equals("123456")) {
-//                    UserBase ub = new UserBase();
-//                    ub.setUserPassWord(userPassWord);
-//                    ub.setUserTel(userTel);
-////        ub.setUserName(userName);
-////        ub.setUserEmail(userEmail);
-////        ub.setUserNickName(userNickName);
-//                    ub.setUserState("1");
-////                    ub.setUserLoginState("0");
-//                    ub.setChangedate(new Date());
-//                    userBaseService.insert(ub);
-//                    fanhuiJSONobj.put("RequestCode", 0);
-//                    fanhuiJSONobj.put("RequestMessage", "注册成功");
-//                } else {
-//                    fanhuiJSONobj.put("RequestCode", 3);
-//                    fanhuiJSONobj.put("RequestMessage", "无效验证码");
-//                }
-//            } else {
-//                fanhuiJSONobj.put("RequestCode", 1);
-//                fanhuiJSONobj.put("RequestMessage", "此用户已经注册");
-//            }
-//        }else{
-//            fanhuiJSONobj.put("RequestCode", 2);
-//            fanhuiJSONobj.put("RequestMessage", "空参数");
-//        }
-//        return fanhuiJSONobj.toString();
-//    }
+
 
 
     /**
@@ -188,9 +151,10 @@ public class AppController {
      * RequestCode：0 可注册 1 已注册 2 空参数 默认 999 一些系统程序异常
      * RequestMessage：“返回的文字说明”
      */
-    @RequestMapping("/eqUserExist")
+    @RequestMapping(value = "/eqUserExist",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
-    public String eqUserExist(String userTel,String RequestId) {
+    @CrossOrigin
+    public String eqUserExist(String userTel) {
         //调用记录访问行为 模块 后续完善 RequestId
 
         JSONObject fanhuiJSONobj = new JSONObject();
@@ -367,6 +331,58 @@ public class AppController {
         return return_json.toString();
     }
     //todo 根据id 修改用户
+
+//    /**
+//     //     * 用户注册接口
+//     //     *
+//     //     * @return
+//     //     */
+//    @RequestMapping("/UserSignin")
+//    @ResponseBody
+//    public String UserSignin(String userTel,String userPassWord,String securityCode,String RequestId)
+//    {
+//        //调用记录访问行为 模块 后续完善 RequestId
+//
+//        //数据校验
+//        //判断是否为空
+//        //判断是否为电话号码
+//        //判断userPassWord的 min max长度合规
+//        //数据校验的工作以由阿里云API网关完成，下面直接完成业务
+//
+//        JSONObject fanhuiJSONobj = new JSONObject();
+//        fanhuiJSONobj.put("RequestCode", 999);
+//        fanhuiJSONobj.put("RequestMessage", "注册失败，系统出错啦");
+//        if(!userTel.isEmpty()&&!userPassWord.isEmpty()) {
+//            JSONObject eqUserExistJSONobj = new JSONObject(eqUserExist(userTel, "localRequst"));
+//            if (eqUserExistJSONobj.getInt("RequestCode") == 0) {
+//
+//                if (securityCode.equals("123456")) {
+//                    UserBase ub = new UserBase();
+//                    ub.setUserPassWord(userPassWord);
+//                    ub.setUserTel(userTel);
+////        ub.setUserName(userName);
+////        ub.setUserEmail(userEmail);
+////        ub.setUserNickName(userNickName);
+//                    ub.setUserState("1");
+////                    ub.setUserLoginState("0");
+//                    ub.setChangedate(new Date());
+//                    userBaseService.insert(ub);
+//                    fanhuiJSONobj.put("RequestCode", 0);
+//                    fanhuiJSONobj.put("RequestMessage", "注册成功");
+//                } else {
+//                    fanhuiJSONobj.put("RequestCode", 3);
+//                    fanhuiJSONobj.put("RequestMessage", "无效验证码");
+//                }
+//            } else {
+//                fanhuiJSONobj.put("RequestCode", 1);
+//                fanhuiJSONobj.put("RequestMessage", "此用户已经注册");
+//            }
+//        }else{
+//            fanhuiJSONobj.put("RequestCode", 2);
+//            fanhuiJSONobj.put("RequestMessage", "空参数");
+//        }
+//        return fanhuiJSONobj.toString();
+//    }
 //
 //    /**
 //     * 手机号注册时获取验证码接口
