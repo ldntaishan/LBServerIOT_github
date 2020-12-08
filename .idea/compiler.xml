@@ -9,8 +9,5 @@
         <module name="LBServerIOT" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="LBServerIOT" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>
