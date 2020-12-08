@@ -20,9 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import static com.cn.httpsms.util.HttpServletRequestToString.httpTool;
 
@@ -86,6 +89,51 @@ public class AppController {
         logger.info("================="+json.toJSONString());
 //        logger.info("================="+new String(msg.getBytes("iso-8859-1"),"utf-8"));
         return "apptest"+json.toJSONString();
+    }
+
+    @RequestMapping(value = "/t3",method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    @CrossOrigin
+    public String t3() throws UnsupportedEncodingException {
+
+        logger.info("=================T3");
+//        logger.info("================="+new String(msg.getBytes("iso-8859-1"),"utf-8"));
+        return "{\"RequestCode\":200,\"RequestMessage\":\"成功\"}";
+    }
+
+    @RequestMapping(value = "/t4",method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    @CrossOrigin
+    public String t4(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+
+
+        Map<String, String[]> requestMap = request.getParameterMap();
+        for (Object key : requestMap.keySet()) {
+            for (int i = 0; i < requestMap.get(key).length; i++) {
+                logger.info("退货信息接口_GET的键= " + key + "; 值" + i + "= " + requestMap.get(key)[i]);
+            }
+        }
+        BufferedReader br;
+        String postStr;
+        try {
+            br = request.getReader();
+            String buffer;
+            StringBuffer buff = new StringBuffer();
+            while ((buffer = br.readLine()) != null) {
+                buff.append(buffer + "\n");
+            }
+            br.close();
+            postStr = buff.toString();
+            logger.info("退货信息接口收到的POST数据:" + postStr);
+
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+
+
+//        logger.info("================="+json.toJSONString());
+//        logger.info("================="+new String(msg.getBytes("iso-8859-1"),"utf-8"));
+        return "apptest";
     }
 
     /**
@@ -248,7 +296,7 @@ public class AppController {
     /**
      * 查询用户列表
      * return：list列表
-     * http://192.168.1.4:8080/product/listProduct
+     * http://192.168.1.4:8080/product/seAllUserList
      */
     @RequestMapping(value = "/seAllUserList",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
