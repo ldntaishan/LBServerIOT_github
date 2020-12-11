@@ -80,6 +80,15 @@ public class AppController {
         logger.info("================="+new String(msg.getBytes("iso-8859-1"),"utf-8"));
         return "apptest"+msg;
         }
+    @RequestMapping(value = "/t11",method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    @CrossOrigin
+    public String t11(String msg,String msg2) throws UnsupportedEncodingException {
+        logger.info("================="+msg);
+        logger.info("================="+msg2);
+//        logger.info("================="+new String(msg.getBytes("iso-8859-1"),"utf-8"));
+        return "apptest"+msg;
+    }
 
     @RequestMapping(value = "/t2",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
@@ -141,9 +150,20 @@ public class AppController {
      *
      * @return
      */
-    @RequestMapping("/userSignin")
+    @RequestMapping(value = "/userSignin",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
-    public String userSignin(String userTel,String userPassWord,String securityCode,String userRole)
+    @CrossOrigin
+    public String userSignin(
+            String userName,
+            String userNickName,
+            String userEmail,
+            String userTel,
+            String userRole,
+            String userPassWord,
+            String userState,
+            String securityCode
+
+    )
     {
         //调用记录访问行为 模块 后续完善 RequestId
 
@@ -160,24 +180,25 @@ public class AppController {
             JSONObject eqUserExistJSONobj = new JSONObject(eqUserExist(userTel));
             if (eqUserExistJSONobj.getInt("RequestCode") == 0) {
 
-                if (securityCode.equals("123456")) {
+//                if (securityCode.equals("123456")) {
                     UserBase ub = new UserBase();
-                    ub.setUserPassWord(userPassWord);
+
+                    ub.setUserName(userName);
+                    ub.setUserNickName(userNickName);
+                    ub.setUserEmail(userEmail);
                     ub.setUserTel(userTel);
-//        ub.setUserName(userName);
-//        ub.setUserEmail(userEmail);
-//        ub.setUserNickName(userNickName);
-                    ub.setUserState("1");
                     ub.setUserRole(userRole);// 1为管理员  2为普通用户
-//                    ub.setUserLoginState("0");
+                    ub.setUserPassWord(userPassWord);
+                    ub.setUserState("1");// 1为可用 2为冻结
                     ub.setChangedate(new Date());
+
                     userBaseService.insert(ub);
                     fanhuiJSONobj.put("RequestCode", 200);
                     fanhuiJSONobj.put("RequestMessage", "成功");
-                } else {
-                    fanhuiJSONobj.put("RequestCode", 1003);
-                    fanhuiJSONobj.put("RequestMessage", "无效验证码");
-                }
+//                } else {
+//                    fanhuiJSONobj.put("RequestCode", 1003);
+//                    fanhuiJSONobj.put("RequestMessage", "无效验证码");
+//                }
             } else {
                 fanhuiJSONobj.put("RequestCode", 1001);
                 fanhuiJSONobj.put("RequestMessage", "此用户已经注册");
@@ -301,18 +322,25 @@ public class AppController {
     @RequestMapping(value = "/seAllUserList",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     @CrossOrigin
-    public String seAllUserList() {
+    public String seAllUserList(String query) {
+        com.alibaba.fastjson.JSONObject json = com.alibaba.fastjson.JSONObject.parseObject(query);
 
 //        JSONObject json = JSONObject.parseObject(httpTool(request));
 //        logger.info("================="+json.toString());
 
         logger.info("=========获取用户列表========");
+        logger.info("=========接受的参数为：========"+json.toJSONString());
+//        logger.info("=========解析为：========"+json.getInteger("limit")+"===="+json.getInteger("page"));
+        int pageSize=json.getInteger("limit");
+        int pageNum=json.getInteger("page");
+
         com.alibaba.fastjson.JSONObject fanhuiJSONobj = new com.alibaba.fastjson.JSONObject();
         fanhuiJSONobj.put("callbackCode","991");
         fanhuiJSONobj.put("callbackDetails","系统错误");
 
         //查询用户列表
-        List<UserBase> list_userBase=userBaseService.list_all_userBase();
+        List<UserBase> list_userBase=userBaseService.list_query_userBase(pageSize,pageNum);
+        long count=userBaseService.list_count_userBase();
 
 
         if(list_userBase.size()!=0)
@@ -330,6 +358,7 @@ public class AppController {
             fanhuiJSONobj.put("callbackCode","200");
             fanhuiJSONobj.put("callbackDetails","正常");
             fanhuiJSONobj.put("callbackList",jsonarray_userBase);
+            fanhuiJSONobj.put("total",count);
 
         }else
         {
@@ -338,6 +367,7 @@ public class AppController {
             fanhuiJSONobj.put("callbackList","");
 
         }
+        logger.info("返回为："+fanhuiJSONobj.toString());
         return fanhuiJSONobj.toString();
     }
 

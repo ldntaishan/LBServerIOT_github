@@ -74,6 +74,28 @@ public class UserBaseServiceImpl extends BaseServiceImpl<UserBase> implements Us
         return list_userBase;
     }
 
+    /**
+     * 根据创建时间查询全部
+     * //分页条件查询
+     * @return
+     */
+    @Override
+    public List<UserBase> list_query_userBase(int pageSize,int pageNum)
+    {
+        String list_all_userBase_Sql = "select pd from UserBase pd order by pd.createdate DESC";
+        List<UserBase> list_userBase = getResultList(list_all_userBase_Sql,pageSize,pageNum);
+        return list_userBase;
+    }
+
+    @Override
+    public long list_count_userBase()
+    {
+
+        String list_count_userBase_Sql = "select count(*) from UserBase pd";
+        long count =getCountByHql(list_count_userBase_Sql);
+        return count;
+    }
+
     @Override
     public void deleteUserBase(String userBaseId)
     {

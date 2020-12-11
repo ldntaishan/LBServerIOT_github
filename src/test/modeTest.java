@@ -40,16 +40,48 @@ public class modeTest {
 
     /**
      * 初始化测试信息 用户 设备 传感器
+     * String userName,
+     *             String userNickName,
+     *             String userEmail,
+     *             String userTel,
+     *             String userRole,
+     *             String userPassWord,
+     *             String userState,
+     *             String securityCode
      */
     @Test
     public void test_init_all_date()
     {
         //初始化用户信息（5个用户）
-        appController.userSignin("13900001111","111","123456","2");
-        appController.userSignin("13900001112","111","123456","2");
-        appController.userSignin("13900001113","111","123456","2");
-        appController.userSignin("13900001114","111","123456","2");
-        appController.userSignin("13900001115","111","123456","2");
+        appController.userSignin("张一","张一南山采茶","zhag1@163.com","13411110001","1","111","1","");
+        appController.userSignin("张二","张二南山采茶","zhag2@163.com","13411110002","2","111","1","");
+        appController.userSignin("张三","张三南山采茶","zhagnsan3@163.com","13411110003","2","111","1","");
+        appController.userSignin("张四","张四南山采茶","zhagnsan4@163.com","13411110004","2","111","1","");
+        appController.userSignin("张五","张五南山采茶","zhagnsan5@163.com","13411110005","2","111","1","");
+        appController.userSignin("张六","张六南山采茶","zhagnsan6@163.com","13411110006","2","111","1","");
+        appController.userSignin("张七","张七南山采茶","zhagnsan7@163.com","13411110007","2","111","1","");
+        appController.userSignin("张八","张八南山采茶","zhagnsan8@163.com","13411110008","2","111","1","");
+        appController.userSignin("张九","张九南山采茶","zhagnsan9@163.com","13411110009","2","111","1","");
+        appController.userSignin("李一","李一南山采茶","lzhagnsan@163.com","13411110010","1","111","1","");
+        appController.userSignin("李二","李二南山采茶","lzhagnsan@163.com","13411110011","2","111","1","");
+        appController.userSignin("李三","李三南山采茶","lzhagnsan@163.com","13411110012","2","111","1","");
+        appController.userSignin("李四","李四南山采茶","lzhagnsan@163.com","13411110013","2","111","1","");
+        appController.userSignin("李五","李五南山采茶","lzhagnsan@163.com","13411110014","2","111","1","");
+        appController.userSignin("李六","李六南山采茶","lzhagnsan@163.com","13411110015","2","111","1","");
+        appController.userSignin("李七","李七南山采茶","lzhagnsan@163.com","13411110016","2","111","1","");
+        appController.userSignin("李八","李八南山采茶","lzhagnsan@163.com","13411110017","2","111","1","");
+        appController.userSignin("李九","李九南山采茶","lzhagnsan@163.com","13411110018","2","111","1","");
+        appController.userSignin("王一","王一南山采茶","wzhagnsan@163.com","13411110019","2","111","1","");
+        appController.userSignin("王二","王二南山采茶","wzhagnsan@163.com","13411110020","2","111","1","");
+        appController.userSignin("王三","王三南山采茶","wzhagnsan@163.com","13411110021","2","111","1","");
+        appController.userSignin("王四","王四南山采茶","wzhagnsan@163.com","13411110022","2","111","1","");
+        appController.userSignin("王五","王五南山采茶","wzhagnsan@163.com","13411110023","2","111","1","");
+        appController.userSignin("王六","王六南山采茶","wzhagnsan@163.com","13411110024","2","111","1","");
+        appController.userSignin("王七","王七南山采茶","wzhagnsan@163.com","13411110025","2","111","1","");
+        appController.userSignin("王九","王九南山采茶","wzhagnsan@163.com","13411110026","2","111","1","");
+        appController.userSignin("赵一","赵一南山采茶","wzhagnsan@163.com","13411110027","2","111","1","");
+        appController.userSignin("赵二","赵二南山采茶","wzhagnsan@163.com","13411110028","2","111","1","");
+
         //初始化设备
 
         JSONObject json1 = JSONObject.parseObject(equipmentController.creart_equipment("新乡风电场","西南1号风力发电塔","EN2.1-110","1001"));
@@ -89,7 +121,35 @@ public class modeTest {
     @Test
     public void test_userBase_reg() throws UnsupportedEncodingException {
 //        appController.UserSignin("13426364664","111","123456","2","A9999999");
-        System.out.println(appController.userSignin("13426364670","111","123456","2"));
+        appController.userSignin("张一","张一南山采茶","zhag1@163.com","13411110001","1","111","1","");
+        appController.userSignin("张二","张二南山采茶","zhag2@163.com","13411110002","2","111","1","");
+        appController.userSignin("张三","张三南山采茶","zhagnsan3@163.com","13411110003","2","111","1","");
+        appController.userSignin("张四","张四南山采茶","zhagnsan4@163.com","13411110004","2","111","1","");
+        appController.userSignin("张五","张五南山采茶","zhagnsan5@163.com","13411110005","2","111","1","");
+        appController.userSignin("张六","张六南山采茶","zhagnsan6@163.com","13411110006","2","111","1","");
+        appController.userSignin("张七","张七南山采茶","zhagnsan7@163.com","13411110007","2","111","1","");
+        appController.userSignin("张八","张八南山采茶","zhagnsan8@163.com","13411110008","2","111","1","");
+        appController.userSignin("张九","张九南山采茶","zhagnsan9@163.com","13411110009","2","111","1","");
+        appController.userSignin("李一","李一南山采茶","lzhagnsan@163.com","13411110010","1","111","1","");
+        appController.userSignin("李二","李二南山采茶","lzhagnsan@163.com","13411110011","2","111","1","");
+        appController.userSignin("李三","李三南山采茶","lzhagnsan@163.com","13411110012","2","111","1","");
+        appController.userSignin("李四","李四南山采茶","lzhagnsan@163.com","13411110013","2","111","1","");
+        appController.userSignin("李五","李五南山采茶","lzhagnsan@163.com","13411110014","2","111","1","");
+        appController.userSignin("李六","李六南山采茶","lzhagnsan@163.com","13411110015","2","111","1","");
+        appController.userSignin("李七","李七南山采茶","lzhagnsan@163.com","13411110016","2","111","1","");
+        appController.userSignin("李八","李八南山采茶","lzhagnsan@163.com","13411110017","2","111","1","");
+        appController.userSignin("李九","李九南山采茶","lzhagnsan@163.com","13411110018","2","111","1","");
+        appController.userSignin("王一","王一南山采茶","wzhagnsan@163.com","13411110019","2","111","1","");
+        appController.userSignin("王二","王二南山采茶","wzhagnsan@163.com","13411110020","2","111","1","");
+        appController.userSignin("王三","王三南山采茶","wzhagnsan@163.com","13411110021","2","111","1","");
+        appController.userSignin("王四","王四南山采茶","wzhagnsan@163.com","13411110022","2","111","1","");
+        appController.userSignin("王五","王五南山采茶","wzhagnsan@163.com","13411110023","2","111","1","");
+        appController.userSignin("王六","王六南山采茶","wzhagnsan@163.com","13411110024","2","111","1","");
+        appController.userSignin("王七","王七南山采茶","wzhagnsan@163.com","13411110025","2","111","1","");
+        appController.userSignin("王九","王九南山采茶","wzhagnsan@163.com","13411110026","2","111","1","");
+        appController.userSignin("赵一","赵一南山采茶","wzhagnsan@163.com","13411110027","2","111","1","");
+        appController.userSignin("赵二","赵二南山采茶","wzhagnsan@163.com","13411110028","2","111","1","");
+//        System.out.println(appController.userSignin("13426364670","111","123456","2"));
     }
 
     /**
@@ -179,7 +239,7 @@ public class modeTest {
     @Test
     public void test_seAllUserList() throws UnsupportedEncodingException {
 //        appController.UserSignin("13426364664","111","123456","2","A9999999");
-        System.out.println(appController.seAllUserList());
+        System.out.println(appController.seAllUserList("{\"page\":1,\"limit\":1000}"));
     }
 
     /**
