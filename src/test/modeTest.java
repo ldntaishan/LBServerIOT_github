@@ -84,7 +84,7 @@ public class modeTest {
 
         //初始化设备
 
-        JSONObject json1 = JSONObject.parseObject(equipmentController.creart_equipment("新乡风电场","西南1号风力发电塔","EN2.1-110","1001"));
+        JSONObject json1 = JSONObject.parseObject(equipmentController.creart_equipment("新乡风电场","西南1号风力发电塔","EN2.1-110","1001","1"));
         String equipmentId1=json1.getString("equipmentId");
         System.out.println(equipmentId1);
         sensorController.creart_sensor("一号点位","M001","5161326711",equipmentId1,"0.1","4028098175c6d2cc0175c6d2d7a10001");
@@ -93,7 +93,7 @@ public class modeTest {
         sensorController.creart_sensor("四号点位","M001","5161326714",equipmentId1,"0.1","4028098175c6d2cc0175c6d2d7a10001");
         sensorController.creart_sensor("五号点位","M001","5161326715",equipmentId1,"0.1","4028098175c6d2cc0175c6d2d7a10001");
 
-        JSONObject json2 = JSONObject.parseObject(equipmentController.creart_equipment("新乡风电场","西南2号风力发电塔","EN2.1-110","1002"));
+        JSONObject json2 = JSONObject.parseObject(equipmentController.creart_equipment("新乡风电场","西南2号风力发电塔","EN2.1-110","1002","1"));
         String equipmentId2=json2.getString("equipmentId");
         sensorController.creart_sensor("一号点位","M001","5161326721",equipmentId2,"0.1","4028098175c6d2cc0175c6d2d7a10001");
         sensorController.creart_sensor("二号点位","M001","5161326722",equipmentId2,"0.1","4028098175c6d2cc0175c6d2d7a10001");
@@ -101,7 +101,7 @@ public class modeTest {
         sensorController.creart_sensor("四号点位","M001","5161326724",equipmentId2,"0.1","4028098175c6d2cc0175c6d2d7a10001");
         sensorController.creart_sensor("五号点位","M001","5161326725",equipmentId2,"0.1","4028098175c6d2cc0175c6d2d7a10001");
 
-        JSONObject json3 = JSONObject.parseObject(equipmentController.creart_equipment("新乡风电场","西南1号风力发电塔","EN2.1-110","1003"));
+        JSONObject json3 = JSONObject.parseObject(equipmentController.creart_equipment("新乡风电场","西南1号风力发电塔","EN2.1-110","1003","1"));
         String equipmentId3=json3.getString("equipmentId");
         sensorController.creart_sensor("一号点位","M006","5161326731",equipmentId3,"0.1","4028098175c6d2cc0175c6d2d7a10001");
         sensorController.creart_sensor("二号点位","M006","5161326732",equipmentId3,"0.1","4028098175c6d2cc0175c6d2d7a10001");
@@ -263,7 +263,8 @@ public class modeTest {
                 ("新乡风电场",
                  "西南4号风力发电塔",
                  "EN2.1-110",
-                 "1004"));
+                 "1004",
+                        "1"));
     }
 
     @Test
@@ -278,7 +279,7 @@ public class modeTest {
 
     @Test
     public void test_find_eqmt_list() throws UnsupportedEncodingException {
-        System.out.println(equipmentController.find_eqmt_list());
+//        System.out.println(equipmentController.find_eqmt_list());
     }
 
     //=========================以下传感器测试方法============================================================

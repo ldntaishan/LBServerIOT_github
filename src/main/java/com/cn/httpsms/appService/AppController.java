@@ -341,7 +341,15 @@ public class AppController {
 
         //查询用户列表
         List<UserBase> list_userBase=userBaseService.list_query_userBase(pageSize,pageNum,userName);
-        long count=userBaseService.list_count_userBase();
+
+        //userName有值就count就返回查询条件的size，没有值就count全部数据：此形式是为了配合vue前端页面的逻辑
+        long count;
+        if(StringEQ.checkStringIsNull(userName))
+        {
+            count=list_userBase.size();
+        }else{
+            count=userBaseService.list_count_userBase();
+        }
 
 
         if(list_userBase.size()!=0)

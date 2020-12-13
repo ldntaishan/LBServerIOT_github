@@ -17,5 +17,7 @@ public interface EquipmentService extends BaseService<Equipment>{
     public Equipment findById_equipment(String equipmentId);
     public void del_eqmt(String equipmentId);
     public List<Equipment> list_all_equipment();
+    public List<Equipment> list_query_equipment(int pageSize,int pageNum,String equipmentName);
+    public long list_count_equipment();
 
 }

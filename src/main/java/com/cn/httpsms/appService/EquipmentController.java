@@ -41,13 +41,16 @@ public class EquipmentController {
      * @param equipmentNO
      * @return
      */
-    @RequestMapping("/crt_eqmt")
+
+    @RequestMapping(value = "/crt_eqmt",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
+    @CrossOrigin
     public String creart_equipment(
             String organization,
             String equipmentName,
             String equipmentType,
-            String equipmentNO
+            String equipmentNO,
+            String sysState
     )
     {
         com.alibaba.fastjson.JSONObject return_json = new com.alibaba.fastjson.JSONObject();
@@ -61,7 +64,7 @@ public class EquipmentController {
             eqmt.setEquipmentName(equipmentName);
             eqmt.setEquipmentType(equipmentType);
             eqmt.setEquipmentNO(equipmentNO);
-            eqmt.setSysState("1");
+            eqmt.setSysState(sysState);
             eqmt.setCreatedate(new Date());
             equipmentService.insert(eqmt);
             return_json.put("callbackCode",SysCode.SUCCESS_CODE);
@@ -221,25 +224,41 @@ public class EquipmentController {
     @RequestMapping(value = "/f_eqmtlist",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     @CrossOrigin
-    public String find_eqmt_list() {
+    public String find_eqmt_list(String query) {
+
+        com.alibaba.fastjson.JSONObject json = com.alibaba.fastjson.JSONObject.parseObject(query);
+        logger.info("=========获取设备列表========");
+        logger.info("=========接受的参数为：========"+json.toJSONString());
+        int pageSize=json.getInteger("limit");
+        int pageNum=json.getInteger("page");
+        String equipmentName=json.getString("equipmentName");
 
         com.alibaba.fastjson.JSONObject return_json = new com.alibaba.fastjson.JSONObject();
         return_json.put("callbackCode", SysCode.SYS_ERROR_CODE);
         return_json.put("callbackDetails",SysCode.SYS_ERROR_DESCRIPTION);
 
         //查询设备列表
-        List<Equipment> list_all_equipment=equipmentService.list_all_equipment();
+        List<Equipment> list_equipment=equipmentService.list_query_equipment(pageSize,pageNum,equipmentName);
+        //equipmentName有值就count就返回查询条件的size，没有值就count全部数据：此形式是为了配合vue前端页面的逻辑
+        long count;
+        if(StringEQ.checkStringIsNull(equipmentName))
+        {
+            count=list_equipment.size();
+        }else{
+            count=equipmentService.list_count_equipment();
+        }
 
-        if(list_all_equipment.size()!=0)
+        if(list_equipment.size()!=0)
         {
             com.alibaba.fastjson.JSONArray jsonarray_equipment=new JSONArray();
-            for(int i=0;i<list_all_equipment.size();i++)
+            for(int i=0;i<list_equipment.size();i++)
             {
-                jsonarray_equipment.add(list_all_equipment.get(i));
+                jsonarray_equipment.add(list_equipment.get(i));
             }
             return_json.put("callbackCode",SysCode.SUCCESS_CODE);
             return_json.put("callbackDetails",SysCode.SUCCESS_DESCRIPTION);
             return_json.put("callbackList",jsonarray_equipment);
+            return_json.put("total",count);
 
         }else
         {
