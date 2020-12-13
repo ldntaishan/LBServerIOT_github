@@ -333,13 +333,14 @@ public class AppController {
 //        logger.info("=========解析为：========"+json.getInteger("limit")+"===="+json.getInteger("page"));
         int pageSize=json.getInteger("limit");
         int pageNum=json.getInteger("page");
+        String userName=json.getString("userName");
 
         com.alibaba.fastjson.JSONObject fanhuiJSONobj = new com.alibaba.fastjson.JSONObject();
         fanhuiJSONobj.put("callbackCode","991");
         fanhuiJSONobj.put("callbackDetails","系统错误");
 
         //查询用户列表
-        List<UserBase> list_userBase=userBaseService.list_query_userBase(pageSize,pageNum);
+        List<UserBase> list_userBase=userBaseService.list_query_userBase(pageSize,pageNum,userName);
         long count=userBaseService.list_count_userBase();
 
 
@@ -381,6 +382,8 @@ public class AppController {
     @ResponseBody
     @CrossOrigin
     public String del_userBase(String userBaseId) {
+        logger.info("=========根据ID删除用户========");
+        logger.info("userID："+userBaseId);
 
         com.alibaba.fastjson.JSONObject return_json = new com.alibaba.fastjson.JSONObject();
         return_json.put("callbackCode", SysCode.SYS_ERROR_CODE);

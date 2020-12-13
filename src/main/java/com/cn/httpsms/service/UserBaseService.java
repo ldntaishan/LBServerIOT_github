@@ -16,7 +16,7 @@ public interface UserBaseService extends BaseService<UserBase>{
     public JSONObject se_UserBase(String key, String value);
     public List<UserBase> userlogin(String loginTag, String userPassWord);
     public List<UserBase> list_all_userBase();
-    public List<UserBase> list_query_userBase(int pageSize,int pageNum);
+    public List<UserBase> list_query_userBase(int pageSize,int pageNum,String userName);
     public long list_count_userBase();
 
 }

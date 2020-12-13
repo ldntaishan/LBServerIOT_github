@@ -4,6 +4,7 @@ package com.cn.httpsms.service.impl;
 import com.cn.httpsms.entity.Product;
 import com.cn.httpsms.entity.UserBase;
 import com.cn.httpsms.service.UserBaseService;
+import com.cn.httpsms.util.StringEQ;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -80,9 +81,17 @@ public class UserBaseServiceImpl extends BaseServiceImpl<UserBase> implements Us
      * @return
      */
     @Override
-    public List<UserBase> list_query_userBase(int pageSize,int pageNum)
+    public List<UserBase> list_query_userBase(int pageSize,int pageNum,String userName)
     {
-        String list_all_userBase_Sql = "select pd from UserBase pd order by pd.createdate DESC";
+        String list_all_userBase_Sql;
+        if(StringEQ.checkStringIsNull(userName))
+        {
+            list_all_userBase_Sql = "select pd from UserBase pd where pd.userName like '%"+userName+"%' order by pd.createdate DESC";
+        }else
+        {
+            list_all_userBase_Sql = "select pd from UserBase pd  order by pd.createdate DESC";
+        }
+
         List<UserBase> list_userBase = getResultList(list_all_userBase_Sql,pageSize,pageNum);
         return list_userBase;
     }

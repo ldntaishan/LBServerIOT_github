@@ -70,6 +70,8 @@ public class UserBase implements Serializable {
 
     /**
      * 用户状态
+     * 1 为 在用
+     * 2 为 停用
      */
     private String userState;
     /**
