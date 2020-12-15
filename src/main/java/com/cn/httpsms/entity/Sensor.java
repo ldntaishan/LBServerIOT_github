@@ -100,6 +100,7 @@ public class Sensor implements Serializable {
      */
     private Date changedate;
 
+
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid",strategy = "uuid")
@@ -221,5 +222,15 @@ public class Sensor implements Serializable {
 
     public void setChangedate(Date changedate) {
         this.changedate = changedate;
+    }
+
+    private String equipmentName;
+
+    public String getEquipmentName() {
+        return equipmentName;
+    }
+
+    public void setEquipmentName(String equipmentName) {
+        this.equipmentName = equipmentName;
     }
 }

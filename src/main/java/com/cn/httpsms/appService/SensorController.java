@@ -3,7 +3,9 @@ package com.cn.httpsms.appService;
 
 import com.alibaba.fastjson.JSONArray;
 import com.cn.httpsms.common.SysCode;
+import com.cn.httpsms.entity.Equipment;
 import com.cn.httpsms.entity.Sensor;
+import com.cn.httpsms.service.EquipmentService;
 import com.cn.httpsms.service.SensorService;
 import com.cn.httpsms.util.StringEQ;
 import org.apache.log4j.Logger;
@@ -31,6 +33,9 @@ public class SensorController {
 
     @Autowired
     private SensorService sensorService;
+
+    @Autowired
+    private EquipmentService equipmentService;
 
     /**
      * 新建设备
@@ -158,25 +163,48 @@ public class SensorController {
     @RequestMapping(value = "/f_sslist",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     @CrossOrigin
-    public String find_ss_list() {
+    public String find_ss_list(String query) {
+
+        com.alibaba.fastjson.JSONObject json = com.alibaba.fastjson.JSONObject.parseObject(query);
+        logger.info("=========获取传感器列表========");
+        logger.info("=========接受的参数为：========"+json.toJSONString());
+        int pageSize=json.getInteger("limit");
+        int pageNum=json.getInteger("page");
+        String equipmentName=json.getString("equipmentName");
+
 
         com.alibaba.fastjson.JSONObject return_json = new com.alibaba.fastjson.JSONObject();
         return_json.put("callbackCode", SysCode.SYS_ERROR_CODE);
         return_json.put("callbackDetails",SysCode.SYS_ERROR_DESCRIPTION);
 
         //查询传感器列表
-        List<Sensor> list_all_sensor=sensorService.list_all_sensor();
+        List<Sensor> list_sensor=sensorService.list_query_sensor(pageSize,pageNum,equipmentName);
 
-        if(list_all_sensor.size()!=0)
+        //userName有值就count就返回查询条件的size，没有值就count全部数据：此形式是为了配合vue前端页面的逻辑
+        long count;
+        if(StringEQ.checkStringIsNull(equipmentName))
+        {
+            count=list_sensor.size();
+        }else{
+            count=sensorService.list_count_sensor();
+        }
+
+        if(list_sensor.size()!=0)
         {
             com.alibaba.fastjson.JSONArray jsonarray_sensor=new JSONArray();
-            for(int i=0;i<list_all_sensor.size();i++)
+            for(int i=0;i<list_sensor.size();i++)
             {
-                jsonarray_sensor.add(list_all_sensor.get(i));
+                String eqmtSql = "select eqmt from Equipment eqmt where eqmt.equipmentId='" + list_sensor.get(i).getEquipmentId() + "'";
+                List<Equipment> list = equipmentService.getResultList(eqmtSql);
+                Equipment eqmt=list.get(0);
+                list_sensor.get(i).setEquipmentName(eqmt.getEquipmentName());
+
+                jsonarray_sensor.add(list_sensor.get(i));
             }
             return_json.put("callbackCode",SysCode.SUCCESS_CODE);
             return_json.put("callbackDetails",SysCode.SUCCESS_DESCRIPTION);
             return_json.put("callbackList",jsonarray_sensor);
+            return_json.put("total",count);
 
         }else
         {

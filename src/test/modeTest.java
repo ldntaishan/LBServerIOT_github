@@ -311,7 +311,7 @@ public class modeTest {
 
     @Test
     public void test_find_sensor_list() throws UnsupportedEncodingException {
-        System.out.println(sensorController.find_ss_list());
+//        System.out.println(sensorController.find_ss_list());
     }
 
 }

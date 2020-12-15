@@ -376,7 +376,7 @@ public class AppController {
             fanhuiJSONobj.put("callbackList","");
 
         }
-        logger.info("返回为："+fanhuiJSONobj.toString());
+//        logger.info("返回为："+fanhuiJSONobj.toString());
         return fanhuiJSONobj.toString();
     }
 

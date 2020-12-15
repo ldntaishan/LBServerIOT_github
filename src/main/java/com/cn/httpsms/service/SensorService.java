@@ -11,4 +11,6 @@ public interface SensorService extends BaseService<Sensor>{
     public Sensor findById_sensor(String sensorId);
     public void del_ss(String sensorId);
     public List<Sensor> list_all_sensor();
+    public List<Sensor> list_query_sensor(int pageSize,int pageNum,String equipmentName);
+    public long list_count_sensor();
 }
