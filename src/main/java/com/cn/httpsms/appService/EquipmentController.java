@@ -270,4 +270,10 @@ public class EquipmentController {
         return return_json.toString();
     }
 
+    public String list_equipment_index()
+    {
+        //todo 风塔名称 点位总数 报警数 停用数 掉线数 正常数
+        return "";
+    }
+
 }

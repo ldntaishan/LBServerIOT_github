@@ -70,13 +70,13 @@ public class SensorServiceImpl extends BaseServiceImpl<Sensor> implements Sensor
         String seSql;
         if(StringEQ.checkStringIsNull(useState)&&StringEQ.checkStringIsNull(monitoringState))
         {
-            seSql = "select ss from Sensor ss where ss.useState = '"+useState+"' and ss.monitoringState = '"+monitoringState+"' order by pd.createdate DESC";
+            seSql = "select ss from Sensor ss where ss.useState = '"+useState+"' and ss.monitoringState = '"+monitoringState+"' order by ss.createdate DESC";
         }else if(StringEQ.checkStringIsNull(useState))
         {
-            seSql = "select ss from Sensor ss where ss.useState = '"+useState+"' order by pd.createdate DESC";
+            seSql = "select ss from Sensor ss where ss.useState = '"+useState+"' order by ss.createdate DESC";
         }else if(StringEQ.checkStringIsNull(monitoringState))
         {
-            seSql = "select ss from Sensor ss where ss.monitoringState = '"+monitoringState+"' order by pd.createdate DESC";
+            seSql = "select ss from Sensor ss where ss.monitoringState = '"+monitoringState+"' order by ss.createdate DESC";
         }else
         {
             seSql = "select ss from Sensor ss  order by ss.createdate DESC";
@@ -172,6 +172,24 @@ public class SensorServiceImpl extends BaseServiceImpl<Sensor> implements Sensor
         String cSql = "select count(*) from Sensor ss where ss.monitoringState='normal' and ss.useState='enable'";
         long count =getCountByHql(cSql);
         return count;
+    }
+
+    @Override
+    public List<Sensor> list_enable_sensor()
+    {
+        String seSql= "select ss from Sensor ss where ss.useState='enable'";
+
+
+        List<Sensor> list = getResultList(seSql);
+        return list;
+    }
+
+    @Override
+    public List<Sensor> devNo_sensor(String devNo)
+    {
+        String sql = "select ss from Sensor ss where ss.devNo='"+devNo+"'";
+        List<Sensor> list_snesor = getResultList(sql);
+        return list_snesor;
     }
 
 
