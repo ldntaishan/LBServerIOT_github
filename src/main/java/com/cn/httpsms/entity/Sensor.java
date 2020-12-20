@@ -34,6 +34,7 @@ public class Sensor implements Serializable {
     {
         createdate = new Date();
         changedate = createdate;
+
     }
 
     /**
@@ -85,6 +86,23 @@ public class Sensor implements Serializable {
      * 上传时间：判断 在线 掉线 （可作为最新记录上传时间&&可作为最后在线时间）
      */
     private Date uploadTime;
+
+    /**
+     * 工作状态
+     * 停用 0 （初始化）
+     * 在用 1
+     */
+    private String useState;
+
+    /**
+     * 监控状态
+     * 初始化 0
+     * 正常 绿色 1
+     * 掉线 灰色 2
+     * 松动 橙色 3
+     * 松动 红色 4
+     */
+    private String monitoringState;
 
     /**
      * 系统状态
@@ -222,6 +240,24 @@ public class Sensor implements Serializable {
 
     public void setChangedate(Date changedate) {
         this.changedate = changedate;
+    }
+
+    @Column(name = "useState")
+    public String getUseState() {
+        return useState;
+    }
+
+    public void setUseState(String useState) {
+        this.useState = useState;
+    }
+
+    @Column(name = "monitoringState")
+    public String getMonitoringState() {
+        return monitoringState;
+    }
+
+    public void setMonitoringState(String monitoringState) {
+        this.monitoringState = monitoringState;
     }
 
     private String equipmentName;

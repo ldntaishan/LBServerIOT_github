@@ -26,6 +26,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import static com.cn.httpsms.util.HttpServletRequestToString.httpTool;
 
@@ -143,6 +144,19 @@ public class AppController {
 //        logger.info("================="+json.toJSONString());
 //        logger.info("================="+new String(msg.getBytes("iso-8859-1"),"utf-8"));
         return "apptest";
+    }
+
+    @RequestMapping(value = "/t5",method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    @CrossOrigin
+    public String t5() throws UnsupportedEncodingException {
+//        logger.info("================="+msg);
+        JSONObject fanhuiJSONobj = new JSONObject();
+        Random random = new Random();
+        int i2 = random.nextInt(100);
+        fanhuiJSONobj.put("RequestCode", 200);
+        fanhuiJSONobj.put("randomValue", i2);
+        return fanhuiJSONobj.toString();
     }
 
     /**

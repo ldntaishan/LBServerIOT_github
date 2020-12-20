@@ -241,64 +241,48 @@ public class SensorController {
 
 
     /**
-     * 查询传感器列表
+     * 查询传感器监控列表
      * @param
      * @return
      *
      */
-    @RequestMapping(value = "/f_sslisttest",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value = "/list_monitoring",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     @CrossOrigin
-    public String find_ss_list_test(String query) {
+    public String listMonitoring(String query) {
 
         com.alibaba.fastjson.JSONObject json = com.alibaba.fastjson.JSONObject.parseObject(query);
-        logger.info("=========获取传感器列表========");
+        logger.info("=========获取实时监控列表========");
         logger.info("=========接受的参数为：========"+json.toJSONString());
         int pageSize=json.getInteger("limit");
         int pageNum=json.getInteger("page");
-        String equipmentName=json.getString("equipmentName");
-
+        String useState=json.getString("useState");
+        String monitoringState=json.getString("monitoringState");
 
         com.alibaba.fastjson.JSONObject return_json = new com.alibaba.fastjson.JSONObject();
         return_json.put("callbackCode", SysCode.SYS_ERROR_CODE);
         return_json.put("callbackDetails",SysCode.SYS_ERROR_DESCRIPTION);
 
         //查询传感器列表
-        List<Sensor> list_sensor=sensorService.list_query_sensor(pageSize,pageNum,equipmentName);
-
-        //userName有值就count就返回查询条件的size，没有值就count全部数据：此形式是为了配合vue前端页面的逻辑
-        long count;
-        if(StringEQ.checkStringIsNull(equipmentName))
-        {
-            count=list_sensor.size();
-        }else{
-            count=sensorService.list_count_sensor();
-        }
-
+        List<Sensor> list_sensor=sensorService.list_monitoring_sensor(pageSize,pageNum,useState,monitoringState);
+        long count=sensorService.list_count_monitoring_sensor(useState,monitoringState);
         if(list_sensor.size()!=0)
         {
             com.alibaba.fastjson.JSONArray jsonarray_sensor=new JSONArray();
             for(int i=0;i<list_sensor.size();i++)
             {
+                //根据ID查风塔
+                Equipment ep=equipmentService.findById_equipment(list_sensor.get(i).getEquipmentId());
                 com.alibaba.fastjson.JSONObject sensorJSONobj = new com.alibaba.fastjson.JSONObject();
                 sensorJSONobj.put("sensorId",list_sensor.get(i).getSensorId());
+                sensorJSONobj.put("equipmentName",ep.getEquipmentName());
                 sensorJSONobj.put("sensorDescription",list_sensor.get(i).getSensorDescription());
                 sensorJSONobj.put("sensorType",list_sensor.get(i).getSensorType());
-                sensorJSONobj.put("devNo",list_sensor.get(i).getDevNo());
-                sensorJSONobj.put("equipmentId",list_sensor.get(i).getEquipmentId());
                 sensorJSONobj.put("warningValue",list_sensor.get(i).getWarningValue());
-                sensorJSONobj.put("allWarningId",list_sensor.get(i).getAllWarningId());
-                sensorJSONobj.put("nowTimeValue",list_sensor.get(i).getNowTimeValue());
                 sensorJSONobj.put("absoluteValue",list_sensor.get(i).getAbsoluteValue());
                 sensorJSONobj.put("uploadTime",list_sensor.get(i).getUploadTime());
-                sensorJSONobj.put("sysState",list_sensor.get(i).getSysState());
-                sensorJSONobj.put("createdate",list_sensor.get(i).getCreatedate());
-                sensorJSONobj.put("changedate",list_sensor.get(i).getChangedate());
-
-                String eqmtSql = "select eqmt from Equipment eqmt where eqmt.equipmentId='" + list_sensor.get(i).getEquipmentId() + "'";
-                List<Equipment> list = equipmentService.getResultList(eqmtSql);
-                Equipment eqmt=list.get(0);
-                sensorJSONobj.put("equipmentName",list.get(0).getEquipmentName());
+                sensorJSONobj.put("useState",list_sensor.get(i).getUseState());
+                sensorJSONobj.put("monitoringState",list_sensor.get(i).getMonitoringState());
                 jsonarray_sensor.add(sensorJSONobj);
             }
             return_json.put("callbackCode",SysCode.SUCCESS_CODE);
@@ -313,5 +297,36 @@ public class SensorController {
             return_json.put("callbackList","");
         }
         return return_json.toString();
+    }
+
+    /**
+     * 更新工作状态
+     * @param sensorId
+     * @param useState
+     * @return
+     *
+     */
+    @RequestMapping(value = "/update_useState",method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    @CrossOrigin
+    public String update_useState(String sensorId,String useState)
+    {
+        com.alibaba.fastjson.JSONObject return_json = new com.alibaba.fastjson.JSONObject();
+        return_json.put("callbackCode", SysCode.SYS_ERROR_CODE);
+        return_json.put("callbackDetails",SysCode.SYS_ERROR_DESCRIPTION);
+        if(StringEQ.checkStringIsNull(sensorId)&&StringEQ.checkStringIsNull(useState))
+        {
+            Sensor ss=sensorService.findById_sensor(sensorId);
+            ss.setUseState(useState);
+            sensorService.update_sensor(ss);
+            return_json.put("callbackCode", SysCode.SUCCESS_CODE);
+            return_json.put("callbackDetails",SysCode.SUCCESS_DESCRIPTION);
+        }else
+        {
+            return_json.put("callbackCode", SysCode.SYS_PARAMTER_CODE);
+            return_json.put("callbackDetails",SysCode.SYS_PARAMTER_DESCRIPTION);
+        }
+        return return_json.toString();
+
     }
 }
