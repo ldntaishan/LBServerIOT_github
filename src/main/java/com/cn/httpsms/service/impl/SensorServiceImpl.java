@@ -114,5 +114,65 @@ public class SensorServiceImpl extends BaseServiceImpl<Sensor> implements Sensor
         return count;
     }
 
+    /**
+     * 点位总数
+     * @return
+     */
+    @Override
+    public long all_total()
+    {
+        String cSql = "select count(*) from Sensor ss where ss.monitoringState<>'initialize'";
+        long count =getCountByHql(cSql);
+        return count;
+    }
+
+    /**
+     * 报警数
+     * @return
+     */
+    @Override
+    public long alert_total()
+    {
+        String cSql = "select count(*) from Sensor ss where ss.monitoringState='alert' and ss.useState='enable'";
+        long count =getCountByHql(cSql);
+        return count;
+    }
+
+    /**
+     * 停用数
+     * @return
+     */
+    @Override
+    public long disable_total()
+    {
+        String cSql = "select count(*) from Sensor ss where ss.useState='disable'";
+        long count =getCountByHql(cSql);
+        return count;
+    }
+
+    /**
+     * 掉线数
+     * @return
+     */
+    @Override
+    public long offline_total()
+    {
+        String cSql = "select count(*) from Sensor ss where ss.monitoringState='offline' and ss.useState='enable'";
+        long count =getCountByHql(cSql);
+        return count;
+    }
+
+    /**
+     * 正常数
+     * @return
+     */
+    @Override
+    public long normal_total()
+    {
+        String cSql = "select count(*) from Sensor ss where ss.monitoringState='normal' and ss.useState='enable'";
+        long count =getCountByHql(cSql);
+        return count;
+    }
+
 
 }

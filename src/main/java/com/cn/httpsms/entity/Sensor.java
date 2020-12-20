@@ -89,18 +89,17 @@ public class Sensor implements Serializable {
 
     /**
      * 工作状态
-     * 停用 0 （初始化）
-     * 在用 1
+     * 停用 disable （初始化）
+     * 在用 enable
      */
     private String useState;
 
     /**
      * 监控状态
-     * 初始化 0
-     * 正常 绿色 1
-     * 掉线 灰色 2
-     * 松动 橙色 3
-     * 松动 红色 4
+     * 初始化 Initialize
+     * 正常 绿色 normal
+     * 掉线 灰色 offline
+     * 松动 红色 alert
      */
     private String monitoringState;
 

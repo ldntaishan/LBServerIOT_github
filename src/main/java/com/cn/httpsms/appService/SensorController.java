@@ -311,6 +311,9 @@ public class SensorController {
     @CrossOrigin
     public String update_useState(String sensorId,String useState)
     {
+        logger.info("=========获取实时监控列表========");
+        logger.info("sensorId"+sensorId);
+        logger.info("useState"+useState);
         com.alibaba.fastjson.JSONObject return_json = new com.alibaba.fastjson.JSONObject();
         return_json.put("callbackCode", SysCode.SYS_ERROR_CODE);
         return_json.put("callbackDetails",SysCode.SYS_ERROR_DESCRIPTION);
@@ -328,5 +331,45 @@ public class SensorController {
         }
         return return_json.toString();
 
+    }
+
+    /**
+     * http://localhost:8080/LBServerIOT_github_war_exploded/ss/index_sensor_number
+     * 首页 获取各个统计数 方法
+     * @return
+     * {"allTotal":26,"disableTotal":11,"callbackCode":"200","alertTotal":4,"callbackDetails":"成功","offlineTotal":3,"normalTotal":9}
+     */
+    @RequestMapping(value = "/index_sensor_number",method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    @CrossOrigin
+    public String index_sensor_number()
+    {
+        logger.info("=========首页数据统计========");
+        com.alibaba.fastjson.JSONObject return_json = new com.alibaba.fastjson.JSONObject();
+        //点位总数
+        long allTotal=sensorService.all_total();
+        //报警数
+        long alertTotal=sensorService.alert_total();
+        //停用数
+        long disableTotal=sensorService.disable_total();
+        //掉线数
+        long offlineTotal=sensorService.offline_total();
+        //正常数
+        long normalTotal=sensorService.normal_total();
+
+        logger.info("点位总数:"+allTotal);
+        logger.info("报警数:"+alertTotal);
+        logger.info("停用数:"+disableTotal);
+        logger.info("掉线数:"+offlineTotal);
+        logger.info("正常数:"+normalTotal);
+
+        return_json.put("callbackCode",SysCode.SUCCESS_CODE);
+        return_json.put("callbackDetails",SysCode.SUCCESS_DESCRIPTION);
+        return_json.put("allTotal",allTotal);
+        return_json.put("alertTotal",alertTotal);
+        return_json.put("disableTotal",disableTotal);
+        return_json.put("offlineTotal",offlineTotal);
+        return_json.put("normalTotal",normalTotal);
+        return return_json.toString();
     }
 }
