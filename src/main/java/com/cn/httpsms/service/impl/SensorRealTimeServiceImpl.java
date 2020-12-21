@@ -37,4 +37,12 @@ public class SensorRealTimeServiceImpl extends BaseServiceImpl<SensorRealTime> i
         List<SensorRealTime> list = getResultList(seSql);
         return list;
     }
+
+    @Override
+    public List<SensorRealTime> devNo_sensorRealTime(String devNo)
+    {
+        String sql = "select ssrt from SensorRealTime ssrt where ssrt.devNo='"+devNo+"'";
+        List<SensorRealTime> list = getResultList(sql);
+        return list;
+    }
 }

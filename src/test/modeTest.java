@@ -3,6 +3,10 @@ import com.cn.httpsms.appService.AppController;
 import com.cn.httpsms.appService.EquipmentController;
 import com.cn.httpsms.appService.ModeService.UserMode;
 import com.cn.httpsms.appService.SensorController;
+import com.cn.httpsms.entity.Sensor;
+import com.cn.httpsms.entity.SensorRealTime;
+import com.cn.httpsms.service.SensorRealTimeService;
+import com.cn.httpsms.service.SensorService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +15,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by ldn on 2019/10/16.
@@ -313,5 +319,30 @@ public class modeTest {
     public void test_find_sensor_list() throws UnsupportedEncodingException {
 //        System.out.println(sensorController.find_ss_list());
     }
+
+    @Autowired
+    private SensorRealTimeService sensorRealTimeService;
+
+    @Autowired
+    private SensorService sensorService;
+
+    //镜像实时监测表 数据，主要用户没有螺栓上传数据
+    @Test
+    public void test_run() throws UnsupportedEncodingException {
+
+        List<Sensor> list=sensorService.list_all_sensor();
+        for (int i=0;i<list.size();i++)
+        {
+            SensorRealTime ssrt=new SensorRealTime();
+            ssrt.setDevNo(list.get(i).getDevNo());
+            ssrt.setAbsoluteValue(0);
+            ssrt.setNowTimeValue(2.3);
+            ssrt.setUploadTime(new Date());
+            sensorRealTimeService.update(ssrt);
+
+        }
+    }
+
+
 
 }

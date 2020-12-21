@@ -48,10 +48,10 @@
 
     </task:scheduled-tasks> -->
     <!--防止日志断线的调试轮询-->
-    <bean id="TurnTest" class="com.cn.httpsms.common.TurnTest"/>
+    <bean id="MonitoringMain" class="com.cn.httpsms.monitoringRun.MonitoringMain"/>
     <task:scheduled-tasks>
         <!--<task:scheduled ref="a" method="a" initial-delay="20000" fixed-delay="5000" />-->
-        <task:scheduled ref="TurnTest" method="loop" initial-delay="40000" fixed-delay="6000" />
+        <task:scheduled ref="MonitoringMain" method="loop" initial-delay="40000" fixed-delay="6000" />
 
     </task:scheduled-tasks>
 

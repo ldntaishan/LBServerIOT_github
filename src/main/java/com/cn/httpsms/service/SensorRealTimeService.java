@@ -22,4 +22,5 @@ public interface SensorRealTimeService extends BaseService<SensorRealTime>{
 //    public long offline_total();
 //    public long normal_total();
       public List<SensorRealTime> list_all_sensorRealTime();
+      public List<SensorRealTime> devNo_sensorRealTime(String devNo);
 }

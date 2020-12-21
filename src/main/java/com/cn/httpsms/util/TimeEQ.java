@@ -2,6 +2,7 @@ package com.cn.httpsms.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by ldn on 2017/11/14.
@@ -54,5 +55,25 @@ public class TimeEQ {
             throw new IllegalArgumentException("Illegal Argument arg:" + sourceTime);
         }
 
+    }
+
+    /**
+     * 时间对比
+     * @param lastPubTime
+     * @param timeEQvalue
+     * @return
+     */
+    public static boolean dataEQ(Date lastPubTime, int timeEQvalue){
+        Date d1=new Date();
+        Date d2=lastPubTime;
+        long _chaValue=((d1.getTime() - d2.getTime()));
+        //3600000毫秒=1小时
+        System.out.println("时间差---"+_chaValue);
+        if(_chaValue<timeEQvalue)
+        {
+            return true;
+        }else{
+            return false;
+        }
     }
 }

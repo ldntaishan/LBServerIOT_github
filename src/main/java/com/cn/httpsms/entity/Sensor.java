@@ -34,6 +34,7 @@ public class Sensor implements Serializable {
     {
         createdate = new Date();
         changedate = createdate;
+        monitoringState="initialize";
 
     }
 
@@ -65,7 +66,7 @@ public class Sensor implements Serializable {
     /**
      * 定制松动阈值
      */
-    private String warningValue;
+    private Double warningValue;
 
     /**
      * 统一松动阈值
@@ -75,12 +76,12 @@ public class Sensor implements Serializable {
     /**
      * 实时值
      */
-    private String nowTimeValue;
+    private Double nowTimeValue;
 
     /**
      * 绝对值：通过此逻辑判断 正常 异常
      */
-    private String absoluteValue;
+    private Double absoluteValue;
 
     /**
      * 上传时间：判断 在线 掉线 （可作为最新记录上传时间&&可作为最后在线时间）
@@ -96,7 +97,7 @@ public class Sensor implements Serializable {
 
     /**
      * 监控状态
-     * 初始化 Initialize
+     * 初始化 initialize
      * 正常 绿色 normal
      * 掉线 灰色 offline
      * 松动 红色 alert
@@ -167,11 +168,11 @@ public class Sensor implements Serializable {
     }
 
     @Column(name = "warningValue")
-    public String getWarningValue() {
+    public Double getWarningValue() {
         return warningValue;
     }
 
-    public void setWarningValue(String warningValue) {
+    public void setWarningValue(Double warningValue) {
         this.warningValue = warningValue;
     }
 
@@ -185,20 +186,20 @@ public class Sensor implements Serializable {
     }
 
     @Column(name = "nowTimeValue")
-    public String getNowTimeValue() {
+    public Double getNowTimeValue() {
         return nowTimeValue;
     }
 
-    public void setNowTimeValue(String nowTimeValue) {
+    public void setNowTimeValue(Double nowTimeValue) {
         this.nowTimeValue = nowTimeValue;
     }
 
     @Column(name = "absoluteValue")
-    public String getAbsoluteValue() {
+    public Double getAbsoluteValue() {
         return absoluteValue;
     }
 
-    public void setAbsoluteValue(String absoluteValue) {
+    public void setAbsoluteValue(Double absoluteValue) {
         this.absoluteValue = absoluteValue;
     }
 

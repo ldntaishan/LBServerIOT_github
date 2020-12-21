@@ -77,7 +77,7 @@ public class SensorController {
             ss.setSensorDescription(sensorDescription);
             ss.setSensorType(sensorType);
             ss.setDevNo(devNo);
-            ss.setWarningValue(warningValue);
+            ss.setWarningValue(Double.parseDouble(warningValue));
             ss.setSysState(sysState);
             sensorService.insert(ss);
             return_json.put("callbackCode",SysCode.SUCCESS_CODE);
