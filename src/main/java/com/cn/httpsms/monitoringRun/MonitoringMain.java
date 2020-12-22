@@ -28,7 +28,7 @@ public class MonitoringMain {
         {
             SensorRealTime ssrt=list.get(i);
             Sensor ss=sensorService.devNo_sensor(ssrt.getDevNo()).get(0);
-            logger.info("---轮询到点位：---"+ss.getDevNo());
+//            logger.info("---轮询到点位：---"+ss.getDevNo());
             //必须为可用状态才加入判断
             if("enable".equals(ss.getUseState()))
             {
@@ -40,9 +40,9 @@ public class MonitoringMain {
                 //上传时间和当前时间比 判断掉线
                 if(!"initialize".equals(ss.getMonitoringState()))
                 {//非初始化状态
-                    if(TimeEQ.dataEQ(ssrt.getUploadTime(),60000))
+                    if(TimeEQ.dataEQ(ssrt.getUploadTime(),300000))
                     {
-                        logger.info("判断出设备在线");
+//                        logger.info("判断出设备在线");
                         double warningValue=ss.getWarningValue();
                         double absoluteValeu=ssrt.getAbsoluteValue();
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -75,7 +75,7 @@ public class MonitoringMain {
                     }else
                     {
                         //写入掉线状态
-                        if(!"offline".equals(ss.getUseState()))
+                        if(!"offline".equals(ss.getMonitoringState()))
                         {
                             logger.info("---offline-----");
                             ss.setMonitoringState("offline");

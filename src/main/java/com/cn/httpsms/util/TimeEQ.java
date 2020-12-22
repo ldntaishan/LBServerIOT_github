@@ -68,7 +68,7 @@ public class TimeEQ {
         Date d2=lastPubTime;
         long _chaValue=((d1.getTime() - d2.getTime()));
         //3600000毫秒=1小时
-        System.out.println("时间差---"+_chaValue);
+//        System.out.println("时间差---"+_chaValue);
         if(_chaValue<timeEQvalue)
         {
             return true;

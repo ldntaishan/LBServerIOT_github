@@ -35,6 +35,7 @@ public class Sensor implements Serializable {
         createdate = new Date();
         changedate = createdate;
         monitoringState="initialize";
+        useState="enable";
 
     }
 
@@ -64,14 +65,11 @@ public class Sensor implements Serializable {
     private String equipmentId;
 
     /**
-     * 定制松动阈值
+     * 松动阈值
      */
     private Double warningValue;
 
-    /**
-     * 统一松动阈值
-     */
-    private String allWarningId;
+
 
     /**
      * 实时值
@@ -174,15 +172,6 @@ public class Sensor implements Serializable {
 
     public void setWarningValue(Double warningValue) {
         this.warningValue = warningValue;
-    }
-
-    @Column(name = "allWarningId")
-    public String getAllWarningId() {
-        return allWarningId;
-    }
-
-    public void setAllWarningId(String allWarningId) {
-        this.allWarningId = allWarningId;
     }
 
     @Column(name = "nowTimeValue")

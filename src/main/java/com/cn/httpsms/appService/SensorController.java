@@ -5,7 +5,9 @@ import com.alibaba.fastjson.JSONArray;
 import com.cn.httpsms.common.SysCode;
 import com.cn.httpsms.entity.Equipment;
 import com.cn.httpsms.entity.Sensor;
+import com.cn.httpsms.entity.SensorRealTime;
 import com.cn.httpsms.service.EquipmentService;
+import com.cn.httpsms.service.SensorRealTimeService;
 import com.cn.httpsms.service.SensorService;
 import com.cn.httpsms.util.StringEQ;
 import org.apache.log4j.Logger;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,6 +40,57 @@ public class SensorController {
 
     @Autowired
     private EquipmentService equipmentService;
+
+    @Autowired
+    private SensorRealTimeService sensorRealTimeService;
+
+
+    /**
+     * http://localhost:8080/LBServerIOT_war_exploded/ss/updatetime?v1=0&&v2=12.3
+     * @param v1
+     * @param v2
+     * @return
+     */
+    @RequestMapping(value = "/updatetime",method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    @CrossOrigin
+    public String test_run_updatetime(String v1,String v2)  {
+
+        List<SensorRealTime> list=sensorRealTimeService.list_all_sensorRealTime();
+        for (int i=0;i<list.size();i++)
+        {
+            SensorRealTime ssrt=list.get(i);
+
+            ssrt.setAbsoluteValue(Double.parseDouble(v1));
+            ssrt.setNowTimeValue(Double.parseDouble(v2));
+            ssrt.setUploadTime(new Date());
+            sensorRealTimeService.update(ssrt);
+
+        }
+        return "更新成功";
+    }
+
+    /**
+     * http://localhost:8080/LBServerIOT_war_exploded/ss/update_devNo?devNo=5161326731&&v1=0&&v2=12.3
+     * @param v1
+     * @param v2
+     * @return
+     */
+    @RequestMapping(value = "/update_devNo",method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    @CrossOrigin
+    public String test_run_updatetime_devNO(String devNo,String v1,String v2)  {
+
+        List<SensorRealTime> list=sensorRealTimeService.devNo_sensorRealTime(devNo);
+
+            SensorRealTime ssrt=list.get(0);
+            ssrt.setAbsoluteValue(Double.parseDouble(v1));
+            ssrt.setNowTimeValue(Double.parseDouble(v2));
+            ssrt.setUploadTime(new Date());
+            sensorRealTimeService.update(ssrt);
+
+        return "更新成功";
+    }
 
     /**
      * 新建设备
@@ -209,7 +263,6 @@ public class SensorController {
                 sensorJSONobj.put("devNo",list_sensor.get(i).getDevNo());
                 sensorJSONobj.put("equipmentId",list_sensor.get(i).getEquipmentId());
                 sensorJSONobj.put("warningValue",list_sensor.get(i).getWarningValue());
-                sensorJSONobj.put("allWarningId",list_sensor.get(i).getAllWarningId());
                 sensorJSONobj.put("nowTimeValue",list_sensor.get(i).getNowTimeValue());
                 sensorJSONobj.put("absoluteValue",list_sensor.get(i).getAbsoluteValue());
                 sensorJSONobj.put("uploadTime",list_sensor.get(i).getUploadTime());

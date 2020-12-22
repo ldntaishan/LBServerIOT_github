@@ -77,6 +77,24 @@ public class EquipmentController {
         return return_json.toString();
     }
 
+    public void init_creart_equipment(
+            String organization,
+            String equipmentName,
+            String equipmentType,
+            String equipmentNO,
+            String sysState
+    )
+    {
+            Equipment eqmt = new Equipment();
+            eqmt.setOrganization(organization);
+            eqmt.setEquipmentName(equipmentName);
+            eqmt.setEquipmentType(equipmentType);
+            eqmt.setEquipmentNO(equipmentNO);
+            eqmt.setSysState(sysState);
+            eqmt.setCreatedate(new Date());
+            equipmentService.insert(eqmt);
+    }
+
     /**
      * 根据id删除设备
      * @param equipmentId
