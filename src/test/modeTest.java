@@ -162,53 +162,53 @@ public class modeTest {
     @Test
     public void init_sensor()
     {
-        sensorController.creart_sensor("40281f817688ff1d017688ff286b0000","基础环西1号点位","M64","5161326731","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff286b0000","基础环西2号点位","M64","5161326732","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff286b0000","基础环西3号点位","M64","5161326733","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff286b0000","基础环西4号点位","M64","5161326734","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff286b0000","基础环西5号点位","M64","5161326735","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff286b0000","基础环西6号点位","M64","5161326736","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff286b0000","基础环西7号点位","M64","5161326737","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff286b0000","基础环西8号点位","M64","5161326738","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff286b0000","基础环西9号点位","M64","5161326739","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff286b0000","基础环西10号点位","M64","5161326740","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff286b0000","基础环西11号点位","M64","5161326741","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07a6c0000","基础环西1号点位","M64","5161326731","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07a6c0000","基础环西2号点位","M64","5161326732","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07a6c0000","基础环西3号点位","M64","5161326733","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07a6c0000","基础环西4号点位","M64","5161326734","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07a6c0000","基础环西5号点位","M64","5161326735","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07a6c0000","基础环西6号点位","M64","5161326736","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07a6c0000","基础环西7号点位","M64","5161326737","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07a6c0000","基础环西8号点位","M64","5161326738","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07a6c0000","基础环西9号点位","M64","5161326739","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07a6c0000","基础环西10号点位","M64","5161326740","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07a6c0000","基础环西11号点位","M64","5161326741","0.5","1");
 
-        sensorController.creart_sensor("40281f817688ff1d017688ff286b0000","一二连接环西1号点位","M48","5161326742","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff286b0000","一二连接环西2号点位","M48","5161326743","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff286b0000","一二连接环西3号点位","M48","5161326744","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff286b0000","一二连接环西4号点位","M48","5161326745","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff286b0000","一二连接环西5号点位","M48","5161326746","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff286b0000","一二连接环西6号点位","M48","5161326747","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff286b0000","一二连接环西7号点位","M48","5161326748","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff286b0000","一二连接环西8号点位","M48","5161326749","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff286b0000","一二连接环西9号点位","M48","5161326750","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff286b0000","一二连接环西10号点位","M48","5161326751","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff286b0000","一二连接环西11号点位","M48","5161326752","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07a6c0000","一二连接环西1号点位","M48","5161326742","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07a6c0000","一二连接环西2号点位","M48","5161326743","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07a6c0000","一二连接环西3号点位","M48","5161326744","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07a6c0000","一二连接环西4号点位","M48","5161326745","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07a6c0000","一二连接环西5号点位","M48","5161326746","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07a6c0000","一二连接环西6号点位","M48","5161326747","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07a6c0000","一二连接环西7号点位","M48","5161326748","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07a6c0000","一二连接环西8号点位","M48","5161326749","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07a6c0000","一二连接环西9号点位","M48","5161326750","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07a6c0000","一二连接环西10号点位","M48","5161326751","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07a6c0000","一二连接环西11号点位","M48","5161326752","0.5","1");
 //---------------------------------------------------------------
-        sensorController.creart_sensor("40281f817688ff1d017688ff28ac0001","基础环西1号点位","M64","5161326753","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff28ac0001","基础环西2号点位","M64","5161326754","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff28ac0001","基础环西3号点位","M64","5161326755","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff28ac0001","基础环西4号点位","M64","5161326756","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff28ac0001","基础环西5号点位","M64","5161326757","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff28ac0001","基础环西6号点位","M64","5161326758","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff28ac0001","基础环西7号点位","M64","5161326759","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff28ac0001","基础环西8号点位","M64","5161326760","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff28ac0001","基础环西9号点位","M64","5161326761","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff28ac0001","基础环西10号点位","M64","5161326762","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff28ac0001","基础环西11号点位","M64","5161326763","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07b1b0001","基础环西1号点位","M64","5161326753","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07b1b0001","基础环西2号点位","M64","5161326754","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07b1b0001","基础环西3号点位","M64","5161326755","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07b1b0001","基础环西4号点位","M64","5161326756","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07b1b0001","基础环西5号点位","M64","5161326757","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07b1b0001","基础环西6号点位","M64","5161326758","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07b1b0001","基础环西7号点位","M64","5161326759","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07b1b0001","基础环西8号点位","M64","5161326760","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07b1b0001","基础环西9号点位","M64","5161326761","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07b1b0001","基础环西10号点位","M64","5161326762","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07b1b0001","基础环西11号点位","M64","5161326763","0.5","1");
 
-        sensorController.creart_sensor("40281f817688ff1d017688ff28ac0001","一二连接环西1号点位","M48","5161326764","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff28ac0001","一二连接环西2号点位","M48","5161326765","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff28ac0001","一二连接环西3号点位","M48","5161326766","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff28ac0001","一二连接环西4号点位","M48","5161326767","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff28ac0001","一二连接环西5号点位","M48","5161326768","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff28ac0001","一二连接环西6号点位","M48","5161326769","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff28ac0001","一二连接环西7号点位","M48","5161326770","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff28ac0001","一二连接环西8号点位","M48","5161326771","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff28ac0001","一二连接环西9号点位","M48","5161326772","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff28ac0001","一二连接环西10号点位","M48","5161326773","0.5","1");
-        sensorController.creart_sensor("40281f817688ff1d017688ff28ac0001","一二连接环西11号点位","M48","5161326774","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07b1b0001","一二连接环西1号点位","M48","5161326764","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07b1b0001","一二连接环西2号点位","M48","5161326765","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07b1b0001","一二连接环西3号点位","M48","5161326766","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07b1b0001","一二连接环西4号点位","M48","5161326767","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07b1b0001","一二连接环西5号点位","M48","5161326768","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07b1b0001","一二连接环西6号点位","M48","5161326769","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07b1b0001","一二连接环西7号点位","M48","5161326770","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07b1b0001","一二连接环西8号点位","M48","5161326771","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07b1b0001","一二连接环西9号点位","M48","5161326772","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07b1b0001","一二连接环西10号点位","M48","5161326773","0.5","1");
+        sensorController.creart_sensor("40281f817689f05c017689f07b1b0001","一二连接环西11号点位","M48","5161326774","0.5","1");
 
 
     }

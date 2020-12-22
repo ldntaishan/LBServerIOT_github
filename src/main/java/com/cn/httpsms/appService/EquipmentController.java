@@ -288,10 +288,41 @@ public class EquipmentController {
         return return_json.toString();
     }
 
-    public String list_equipment_index()
+
+    @RequestMapping(value = "/f_eqmtlistall",method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    @CrossOrigin
+    public String list_all_equipment()
     {
-        //todo 风塔名称 点位总数 报警数 停用数 掉线数 正常数
-        return "";
+        logger.info("=========获取全部设备列表========");
+
+        com.alibaba.fastjson.JSONObject return_json = new com.alibaba.fastjson.JSONObject();
+        return_json.put("callbackCode", SysCode.SYS_ERROR_CODE);
+        return_json.put("callbackDetails",SysCode.SYS_ERROR_DESCRIPTION);
+
+        //查询设备列表
+        List<Equipment> list_equipment=equipmentService.list_all_equipment();
+
+
+        if(list_equipment.size()!=0)
+        {
+            com.alibaba.fastjson.JSONArray jsonarray_equipment=new JSONArray();
+            for(int i=0;i<list_equipment.size();i++)
+            {
+                jsonarray_equipment.add(list_equipment.get(i));
+            }
+            return_json.put("callbackCode",SysCode.SUCCESS_CODE);
+            return_json.put("callbackDetails",SysCode.SUCCESS_DESCRIPTION);
+            return_json.put("callbackList",jsonarray_equipment);
+
+        }else
+        {
+            return_json.put("callbackCode",SysCode.SYS_NULLLIST_CODE);
+            return_json.put("callbackDetails",SysCode.SYS_NULLLIST_DESCRIPTION);
+            return_json.put("callbackList","");
+
+        }
+        return return_json.toString();
     }
 
 }
