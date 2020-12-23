@@ -2,6 +2,7 @@ package com.cn.httpsms.appService;
 
 
 import com.alibaba.fastjson.JSONArray;
+import com.cn.httpsms.common.HttpUtils;
 import com.cn.httpsms.common.SysCode;
 import com.cn.httpsms.entity.Equipment;
 import com.cn.httpsms.entity.Sensor;
@@ -10,6 +11,8 @@ import com.cn.httpsms.service.EquipmentService;
 import com.cn.httpsms.service.SensorRealTimeService;
 import com.cn.httpsms.service.SensorService;
 import com.cn.httpsms.util.StringEQ;
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +22,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ldn on 2020/11/14.
@@ -423,6 +429,58 @@ public class SensorController {
         return_json.put("disableTotal",disableTotal);
         return_json.put("offlineTotal",offlineTotal);
         return_json.put("normalTotal",normalTotal);
+        return return_json.toString();
+    }
+
+    @RequestMapping(value = "/sensor_reset",method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    @CrossOrigin
+    public String sensor_reset(String sensorId) throws Exception {
+
+        logger.info("=========传感器重置！！========");
+        logger.info("sensorId"+sensorId);
+        com.alibaba.fastjson.JSONObject return_json = new com.alibaba.fastjson.JSONObject();
+        return_json.put("callbackCode", SysCode.SYS_ERROR_CODE);
+        return_json.put("callbackDetails",SysCode.SYS_ERROR_DESCRIPTION);
+
+        Sensor ss=sensorService.findById_sensor(sensorId);
+
+        //todo 访问传感器重置接口
+        //提交方式： http post提交
+        //地址：http:// + <ServerIp:port> + /iotInterface/ resetAbsolute
+        //参数：devNo 设备编码
+        //请求的json范例：{"devNo":"5161326715"}
+        //返回范例：
+        //成功：{"success":0, "failureNum":null,"failureMessage":null}
+        //失败：{"success":1, "failureNum":"1001","failureMessage":"设备掉线"}
+        //{"success":1, "failureNum":"1002","failureMessage":"重置失败"}
+
+//        String host = "https://http://39.106.55.120:8080";
+//        String path = "/iotInterface/ resetAbsolute";
+//        String method = "GET";
+//
+////        Map<String, String> headers = new HashMap<String, String>();
+////        headers.put("Authorization", "APPCODE " + appcode);
+//
+//        Map<String, String> querys = new HashMap<String, String>();
+//        querys.put("devNo", ss.getDevNo());
+//
+//
+//        HttpResponse response = HttpUtils.doGet(host, path, method, null, querys);
+//        logger.info(response.getEntity().toString());
+//        String re= EntityUtils.toString(response.getEntity());
+        Double temp_absoluteValue=0.0;
+        ss.setMonitoringState("initialize");
+        ss.setAbsoluteValue(temp_absoluteValue);
+        ss.setUploadTime(null);
+        sensorService.update_sensor(ss);
+
+        return_json.put("callbackCode", SysCode.SUCCESS_CODE);
+        return_json.put("callbackDetails",SysCode.SUCCESS_DESCRIPTION);
+        return_json.put("absoluteValue",ss.getAbsoluteValue());
+        return_json.put("monitoringState",ss.getMonitoringState());
+        return_json.put("uploadTime",ss.getUploadTime());
+
         return return_json.toString();
     }
 }
