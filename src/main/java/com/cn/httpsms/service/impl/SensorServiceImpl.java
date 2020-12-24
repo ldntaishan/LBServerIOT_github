@@ -121,7 +121,19 @@ public class SensorServiceImpl extends BaseServiceImpl<Sensor> implements Sensor
     @Override
     public long all_total()
     {
-        String cSql = "select count(*) from Sensor ss where ss.monitoringState<>'initialize'";
+        String cSql = "select count(*) from Sensor ss where ss.useState='enable'";
+        long count =getCountByHql(cSql);
+        return count;
+    }
+
+    /**
+     * 点位总数-设备下
+     * @return
+     */
+    @Override
+    public long all_total(String equipmentId)
+    {
+        String cSql = "select count(*) from Sensor ss where ss.equipmentId='"+equipmentId+"' and ss.useState='enable'";
         long count =getCountByHql(cSql);
         return count;
     }
@@ -139,6 +151,18 @@ public class SensorServiceImpl extends BaseServiceImpl<Sensor> implements Sensor
     }
 
     /**
+     * 报警数-设备下
+     * @return
+     */
+    @Override
+    public long alert_total(String equipmentId)
+    {
+        String cSql = "select count(*) from Sensor ss where ss.equipmentId='"+equipmentId+"' and ss.monitoringState='alert' and ss.useState='enable'";
+        long count =getCountByHql(cSql);
+        return count;
+    }
+
+    /**
      * 停用数
      * @return
      */
@@ -146,6 +170,18 @@ public class SensorServiceImpl extends BaseServiceImpl<Sensor> implements Sensor
     public long disable_total()
     {
         String cSql = "select count(*) from Sensor ss where ss.useState='disable'";
+        long count =getCountByHql(cSql);
+        return count;
+    }
+
+    /**
+     * 停用数-设备下
+     * @return
+     */
+    @Override
+    public long disable_total(String equipmentId)
+    {
+        String cSql = "select count(*) from Sensor ss where ss.equipmentId='"+equipmentId+"' and ss.useState='disable'";
         long count =getCountByHql(cSql);
         return count;
     }
@@ -163,6 +199,18 @@ public class SensorServiceImpl extends BaseServiceImpl<Sensor> implements Sensor
     }
 
     /**
+     * 掉线数-设备下
+     * @return
+     */
+    @Override
+    public long offline_total(String equipmentId)
+    {
+        String cSql = "select count(*) from Sensor ss where ss.equipmentId='"+equipmentId+"' and ss.monitoringState='offline' and ss.useState='enable'";
+        long count =getCountByHql(cSql);
+        return count;
+    }
+
+    /**
      * 正常数
      * @return
      */
@@ -170,6 +218,18 @@ public class SensorServiceImpl extends BaseServiceImpl<Sensor> implements Sensor
     public long normal_total()
     {
         String cSql = "select count(*) from Sensor ss where ss.monitoringState='normal' and ss.useState='enable'";
+        long count =getCountByHql(cSql);
+        return count;
+    }
+
+    /**
+     * 正常数-设备下
+     * @return
+     */
+    @Override
+    public long normal_total(String equipmentId)
+    {
+        String cSql = "select count(*) from Sensor ss where ss.equipmentId='"+equipmentId+"' and ss.monitoringState='normal' and ss.useState='enable'";
         long count =getCountByHql(cSql);
         return count;
     }

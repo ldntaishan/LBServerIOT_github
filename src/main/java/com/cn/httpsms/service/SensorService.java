@@ -23,6 +23,12 @@ public interface SensorService extends BaseService<Sensor>{
     public long offline_total();
     public long normal_total();
 
+    public long all_total(String equipmentId);
+    public long alert_total(String equipmentId);
+    public long disable_total(String equipmentId);
+    public long offline_total(String equipmentId);
+    public long normal_total(String equipmentId);
+
     public List<Sensor> list_enable_sensor();
     public List<Sensor> devNo_sensor(String devNo);
 }

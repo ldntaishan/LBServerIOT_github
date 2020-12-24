@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.cn.httpsms.common.SysCode;
 import com.cn.httpsms.entity.Equipment;
 import com.cn.httpsms.service.EquipmentService;
+import com.cn.httpsms.service.SensorService;
 import com.cn.httpsms.util.StringEQ;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,10 @@ public class EquipmentController {
 
     @Autowired
     private EquipmentService equipmentService;
+
+    @Autowired
+    private SensorService sensorService;
+
 
     /**
      * 新建设备
@@ -93,6 +98,52 @@ public class EquipmentController {
             eqmt.setSysState(sysState);
             eqmt.setCreatedate(new Date());
             equipmentService.insert(eqmt);
+    }
+
+    /**
+     * 编辑更新设备
+     * @param organization
+     * @param equipmentName
+     * @param equipmentType
+     * @param equipmentNO
+     * @return
+     */
+
+    @RequestMapping(value = "/update_eqmt",method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    @CrossOrigin
+    public String update_eqmt(
+            String organization,
+            String equipmentName,
+            String equipmentType,
+            String equipmentNO,
+            String sysState,
+            String equipmentId
+    )
+    {
+        logger.info("=====编辑更新设备=========");
+        com.alibaba.fastjson.JSONObject return_json = new com.alibaba.fastjson.JSONObject();
+        return_json.put("callbackCode", SysCode.SYS_ERROR_CODE);
+        return_json.put("callbackDetails",SysCode.SYS_ERROR_DESCRIPTION);
+
+        if(StringEQ.checkStringIsNull(organization,equipmentName,equipmentType,equipmentNO))
+        {
+
+            Equipment eqmt  = equipmentService.findById_equipment(equipmentId);
+            eqmt.setOrganization(organization);
+            eqmt.setEquipmentName(equipmentName);
+            eqmt.setEquipmentType(equipmentType);
+            eqmt.setEquipmentNO(equipmentNO);
+            eqmt.setSysState(sysState);
+            eqmt.setCreatedate(new Date());
+            equipmentService.update_equipment(eqmt);
+            return_json.put("callbackCode",SysCode.SUCCESS_CODE);
+            return_json.put("callbackDetails",SysCode.SUCCESS_DESCRIPTION);
+        }else{
+            return_json.put("callbackCode",SysCode.SYS_PARAMTER_CODE);
+            return_json.put("callbackDetails",SysCode.SYS_PARAMTER_DESCRIPTION);
+        }
+        return return_json.toString();
     }
 
     /**
@@ -310,6 +361,66 @@ public class EquipmentController {
             for(int i=0;i<list_equipment.size();i++)
             {
                 jsonarray_equipment.add(list_equipment.get(i));
+            }
+            return_json.put("callbackCode",SysCode.SUCCESS_CODE);
+            return_json.put("callbackDetails",SysCode.SUCCESS_DESCRIPTION);
+            return_json.put("callbackList",jsonarray_equipment);
+
+        }else
+        {
+            return_json.put("callbackCode",SysCode.SYS_NULLLIST_CODE);
+            return_json.put("callbackDetails",SysCode.SYS_NULLLIST_DESCRIPTION);
+            return_json.put("callbackList","");
+
+        }
+        return return_json.toString();
+    }
+
+    /**
+     * 获取全部设备列表-带监控数
+     * @return
+     */
+    @RequestMapping(value = "/f_eqmtlistallcount",method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    @CrossOrigin
+    public String list_all_equipment_count()
+    {
+        logger.info("=========获取全部设备列表-带监控数========");
+
+        com.alibaba.fastjson.JSONObject return_json = new com.alibaba.fastjson.JSONObject();
+        return_json.put("callbackCode", SysCode.SYS_ERROR_CODE);
+        return_json.put("callbackDetails",SysCode.SYS_ERROR_DESCRIPTION);
+
+        //查询设备列表
+        List<Equipment> list_equipment=equipmentService.list_all_equipment();
+
+        if(list_equipment.size()!=0)
+        {
+            com.alibaba.fastjson.JSONArray jsonarray_equipment=new JSONArray();
+            for(int i=0;i<list_equipment.size();i++)
+            {
+                com.alibaba.fastjson.JSONObject equipmentJSONobj = new com.alibaba.fastjson.JSONObject();
+
+                String equipmentId=list_equipment.get(i).getEquipmentId();
+
+                //点位总数
+                long allTotal=sensorService.all_total(equipmentId);
+                //报警数
+                long alertTotal=sensorService.alert_total(equipmentId);
+                //掉线数
+                long offlineTotal=sensorService.offline_total(equipmentId);
+                //正常数
+                long normalTotal=sensorService.normal_total(equipmentId);
+
+                equipmentJSONobj.put("equipmentId",equipmentId);
+                equipmentJSONobj.put("equipmentName",list_equipment.get(i).getEquipmentName());
+                equipmentJSONobj.put("allTotal",allTotal);
+                equipmentJSONobj.put("alertTotal",alertTotal);
+                equipmentJSONobj.put("offlineTotal",offlineTotal);
+                equipmentJSONobj.put("normalTotal",normalTotal);
+
+                jsonarray_equipment.add(equipmentJSONobj);
+
             }
             return_json.put("callbackCode",SysCode.SUCCESS_CODE);
             return_json.put("callbackDetails",SysCode.SUCCESS_DESCRIPTION);

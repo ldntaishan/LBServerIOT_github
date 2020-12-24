@@ -27,6 +27,16 @@ public class EquipmentServiceImpl extends BaseServiceImpl<Equipment> implements 
         return find(equipmentId);
     }
 
+    /**
+     * 更新设备
+     * @param eqmt
+     */
+    @Override
+    public void update_equipment(Equipment eqmt)
+    {
+        update(eqmt);
+    }
+
     @Override
     public void del_eqmt(String equipmentId)
     {
