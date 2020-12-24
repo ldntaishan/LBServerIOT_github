@@ -390,6 +390,7 @@ public class SensorController {
                 sensorJSONobj.put("equipmentName",ep.getEquipmentName());
                 sensorJSONobj.put("sensorDescription",list_sensor.get(i).getSensorDescription());
                 sensorJSONobj.put("sensorType",list_sensor.get(i).getSensorType());
+                sensorJSONobj.put("devNo",list_sensor.get(i).getDevNo());
                 sensorJSONobj.put("warningValue",list_sensor.get(i).getWarningValue());
                 sensorJSONobj.put("absoluteValue",list_sensor.get(i).getAbsoluteValue());
                 sensorJSONobj.put("uploadTime",list_sensor.get(i).getUploadTime());
