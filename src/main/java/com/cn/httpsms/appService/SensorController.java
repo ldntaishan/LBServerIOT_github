@@ -150,6 +150,60 @@ public class SensorController {
     }
 
     /**
+     * 更新编辑设备
+     * @param sensorType
+     * @param devNo
+     * @param equipmentId
+     * @param warningValue
+     * @return
+     */
+    @RequestMapping(value = "/update_ss",method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    @CrossOrigin
+    public String update_sensor(
+            String equipmentId,
+            String sensorDescription,
+            String sensorType,
+            String devNo,
+            String warningValue,
+            String sysState,
+            String sensorId
+    )
+    {
+        logger.info("=====编辑更新传感器=========");
+        logger.info(equipmentId);
+        logger.info(sensorDescription);
+        logger.info(sensorType);
+        logger.info(devNo);
+        logger.info(warningValue);
+        logger.info(sysState);
+        logger.info(sensorId);
+
+        com.alibaba.fastjson.JSONObject return_json = new com.alibaba.fastjson.JSONObject();
+        return_json.put("callbackCode", SysCode.SYS_ERROR_CODE);
+        return_json.put("callbackDetails",SysCode.SYS_ERROR_DESCRIPTION);
+
+        if(StringEQ.checkStringIsNull(equipmentId,sensorDescription,sensorType,devNo,warningValue,sysState,sensorId))
+        {
+
+            Sensor ss  = sensorService.findById_sensor(sensorId);
+            ss.setEquipmentId(equipmentId);
+            ss.setSensorDescription(sensorDescription);
+            ss.setSensorType(sensorType);
+            ss.setDevNo(devNo);
+            ss.setWarningValue(Double.parseDouble(warningValue));
+            ss.setSysState(sysState);
+            sensorService.update_sensor(ss);
+            return_json.put("callbackCode",SysCode.SUCCESS_CODE);
+            return_json.put("callbackDetails",SysCode.SUCCESS_DESCRIPTION);
+        }else{
+            return_json.put("callbackCode",SysCode.SYS_PARAMTER_CODE);
+            return_json.put("callbackDetails",SysCode.SYS_PARAMTER_DESCRIPTION);
+        }
+        return return_json.toString();
+    }
+
+    /**
      * 根据id删除传感器
      * @param sensorId
      * @return
@@ -263,6 +317,9 @@ public class SensorController {
             for(int i=0;i<list_sensor.size();i++)
             {
                 com.alibaba.fastjson.JSONObject sensorJSONobj = new com.alibaba.fastjson.JSONObject();
+                //根据ID查风塔
+                Equipment ep=equipmentService.findById_equipment(list_sensor.get(i).getEquipmentId());
+
                 sensorJSONobj.put("sensorId",list_sensor.get(i).getSensorId());
                 sensorJSONobj.put("sensorDescription",list_sensor.get(i).getSensorDescription());
                 sensorJSONobj.put("sensorType",list_sensor.get(i).getSensorType());
@@ -275,11 +332,7 @@ public class SensorController {
                 sensorJSONobj.put("sysState",list_sensor.get(i).getSysState());
                 sensorJSONobj.put("createdate",list_sensor.get(i).getCreatedate());
                 sensorJSONobj.put("changedate",list_sensor.get(i).getChangedate());
-
-                String eqmtSql = "select eqmt from Equipment eqmt where eqmt.equipmentId='" + list_sensor.get(i).getEquipmentId() + "'";
-                List<Equipment> list = equipmentService.getResultList(eqmtSql);
-                Equipment eqmt=list.get(0);
-                sensorJSONobj.put("equipmentName",list.get(0).getEquipmentName());
+                sensorJSONobj.put("equipmentName",ep.getEquipmentName());
                 jsonarray_sensor.add(sensorJSONobj);
             }
 
