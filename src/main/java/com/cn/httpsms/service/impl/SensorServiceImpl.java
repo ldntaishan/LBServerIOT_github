@@ -55,7 +55,7 @@ public class SensorServiceImpl extends BaseServiceImpl<Sensor> implements Sensor
         String seSql;
         if(StringEQ.checkStringIsNull(equipmentName))
         {
-            seSql = "select ss from Sensor ss where ss.equipmentName like '%"+equipmentName+"%' order by pd.createdate DESC";
+            seSql = "select ss from Sensor ss where ss.equipmentName like '%"+equipmentName+"%' order by ss.createdate DESC";
         }else
         {
             seSql = "select ss from Sensor ss  order by ss.createdate DESC";
