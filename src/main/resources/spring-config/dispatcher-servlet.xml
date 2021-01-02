@@ -49,11 +49,17 @@
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
+    <mvc:default-servlet-handler />
     <!-- 视图解析器策略 和 视图解析器,对JSTL提供良好的支持 -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/jsp/"/>
-        <property name="suffix" value=".jsp"/>
+    <bean  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/"/>
+        <property name="suffix" value=".html"/>
+        <property name="contentType" value="text/html"/>
     </bean>
+    <!--    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+    <!--        <property name="prefix" value="/WEB-INF/jsp/"/>-->
+    <!--        <property name="suffix" value=".jsp"/>-->
+    <!--    </bean>-->
 
     <!-- 全局异常处理 -->
     <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
